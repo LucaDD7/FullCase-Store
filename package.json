@@ -2,13 +2,16 @@
   "name": "fullcase-store",
   "version": "1.0.0",
   "main": "supabaseClient.js",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "vite": "^8.0.0"
+  }
 }

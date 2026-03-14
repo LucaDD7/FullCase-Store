@@ -1,0 +1,28 @@
+import { useEffect, useState } from "react"
+import { supabase } from "../supabaseClient"
+import ProductCard from "../components/ProductCard"
+
+export default function Catalog() {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      let { data, error } = await supabase.from("products").select("*")
+      if (!error) setProducts(data)
+    }
+    fetchProducts()
+  }, [])
+
+  return (
+    <div className="container mt-4">
+      <h2>Catálogo de Fundas</h2>
+      <div className="row">
+        {products.map(p => (
+          <div className="col-md-4" key={p.id}>
+            <ProductCard product={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

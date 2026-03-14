@@ -2,16 +2,23 @@ import { useEffect, useState } from "react"
 import { supabase } from "../supabaseClient"
 import ProductCard from "../components/ProductCard"
 
+const { data, error } = await supabase.from("products").select("*")
+
 export default function Catalog() {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      let { data, error } = await supabase.from("products").select("*")
-      if (!error) setProducts(data)
+  const fetchProducts = async () => {
+    const { data, error } = await supabase.from("products").select("*")
+    if (error) {
+      console.error("Error cargando productos:", error)
+    } else {
+      console.log("Productos:", data)
     }
-    fetchProducts()
-  }, [])
+  }
+  fetchProducts()
+}, [])
+
 
   return (
     <div className="container mt-4">

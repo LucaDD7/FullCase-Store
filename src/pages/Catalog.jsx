@@ -2,33 +2,52 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useCart } from '../context/CartContext';
 
-function Catalog() {
+function Catalog({ searchTerm, setSuggestions }) {
   const [products, setProducts] = useState([]);
   const { cart, addToCart } = useCart();
 
-  const fetchProducts = async () => {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*');
-
-    if (error) {
-      console.error("Error al traer productos:", error);
-    } else {
-      setProducts(data);
-    }
-  };
-
   useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from('products').select('*');
+      if (error) {
+        console.error("Error al traer productos:", error);
+      } else {
+        setProducts(data);
+      }
+    };
     fetchProducts();
   }, []);
 
+  // Generar sugerencias dinámicas SIEMPRE dentro de un useEffect
+  useEffect(() => {
+    if (searchTerm) {
+      const matches = products
+        .filter(
+          (p) =>
+            p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.model.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((p) => `${p.name} (${p.model})`);
+      setSuggestions(matches.slice(0, 5)); // máximo 5 sugerencias
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchTerm, products, setSuggestions]);
+
   if (products.length === 0) return <p>No hay productos disponibles.</p>;
+
+  // Filtrar productos por nombre o modelo
+  const filteredProducts = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.model.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="row">
-      {products.map(product => {
-        const inCart = cart.some(p => p.id === product.id); // 👈 chequeo si está en carrito
-        const noStock = product.stock <= 0 || inCart;       // 👈 bloqueo si stock 0 o ya en carrito
+      {filteredProducts.map(product => {
+        const inCart = cart.some(p => p.id === product.id);
+        const noStock = product.stock <= 0 || inCart;
 
         return (
           <div className="col-md-4 mb-4" key={product.id}>

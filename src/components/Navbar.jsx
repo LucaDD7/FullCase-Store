@@ -1,11 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 
 function Navbar({ onSearch, suggestions }) {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -13,38 +12,25 @@ function Navbar({ onSearch, suggestions }) {
     onSearch(value);
   };
 
-  const handleLogoClick = (e) => {
-    e.preventDefault();
-    navigate("/"); // ir a inicio
-    window.scrollTo({ top: 0, behavior: "smooth" }); // volver arriba
-  };
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
-        <div className="container-fluid d-flex justify-content-between align-items-center">
-          
-          {/* Texto centralizado */}
-          <Link
-            to="/"
-            className="navbar-brand mx-auto fw-bold fs-4"
-            onClick={handleLogoClick}
+        <Link className="navbar-brand mx-auto" to="/">
+          <strong>FullCase Store</strong>
+        </Link>
+        <div className="ms-auto d-flex align-items-center">
+          {/* Botón lupa */}
+          <button
+            className="btn btn-outline-light me-2"
+            onClick={() => setShowModal(true)}
           >
-            FullCase Store
-          </Link>
+            <i className="bi bi-search"></i>
+          </button>
 
-          {/* Bloque lupa primero y carrito al lado (derecha) */}
-          <div className="d-flex align-items-center ms-auto">
-            <button
-              className="btn btn-outline-light me-2"
-              onClick={() => setShowModal(true)}
-            >
-              <i className="bi bi-search"></i>
-            </button>
-            <Link to="/cart" className="btn btn-outline-light">
-              <i className="bi bi-cart"></i>
-            </Link>
-          </div>
+          {/* Botón carrito */}
+          <Link to="/cart" className="btn btn-outline-light">
+            <i className="bi bi-cart"></i>
+          </Link>
         </div>
       </nav>
 
@@ -63,22 +49,39 @@ function Navbar({ onSearch, suggestions }) {
           />
 
           {searchTerm && suggestions.length > 0 && (
-            <ul className="list-group mb-3">
-              {suggestions.map((s, idx) => (
-                <li
-                  key={idx}
-                  className="list-group-item list-group-item-action"
+            <>
+              <ul className="list-group mb-3">
+                {suggestions.map((s, idx) => (
+                  <li
+                    key={idx}
+                    className="list-group-item list-group-item-action"
+                    onClick={() => {
+                      setSearchTerm(s);
+                      onSearch(s);
+                      setShowModal(false); // cerrar modal al elegir
+                    }}
+                  >
+                    {s}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Botón para ver todos los productos similares SOLO si hay más de 1 sugerencia */}
+              {suggestions.length > 1 && (
+                <button
+                  className="btn btn-primary w-100 mb-2"
                   onClick={() => {
-                    setShowModal(false);
-                    navigate(`/product/${s.id}`);
+                    onSearch(searchTerm); // mantiene el filtro
+                    setShowModal(false);  // cierra el modal
                   }}
                 >
-                  {s.name}
-                </li>
-              ))}
-            </ul>
+                  Ver todos los productos similares
+                </button>
+              )}
+            </>
           )}
 
+          {/* Botón para resetear y ver todo */}
           <button
             className="btn btn-secondary w-100"
             onClick={() => {

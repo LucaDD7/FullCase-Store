@@ -21,6 +21,8 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {/* Header solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
         <header className="bg-primary text-white text-center py-5">
+          <br />
+          <br />
           <h1>Bienvenido a FullCase Store</h1>
           <p>Las mejores fundas para tu celular</p>
         </header>

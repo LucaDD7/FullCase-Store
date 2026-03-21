@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Modal } from "react-bootstrap";
 
 function Navbar({ onSearch, suggestions }) {
+  const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -10,51 +13,85 @@ function Navbar({ onSearch, suggestions }) {
     onSearch(value);
   };
 
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    navigate("/"); // ir a inicio
+    window.scrollTo({ top: 0, behavior: "smooth" }); // volver arriba
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
-      <Link className="navbar-brand" to="/">FullCase Store</Link>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
+        <div className="container-fluid d-flex justify-content-between align-items-center">
+          
+          {/* Texto centralizado */}
+          <Link
+            to="/"
+            className="navbar-brand mx-auto fw-bold fs-4"
+            onClick={handleLogoClick}
+          >
+            FullCase Store
+          </Link>
 
-      <div className="ms-auto d-flex align-items-center">
-        {/* Buscador con lupa */}
-        <div className="position-relative me-3" style={{ maxWidth: "250px" }}>
-          <div className="input-group">
-            <span className="input-group-text">
+          {/* Bloque lupa primero y carrito al lado (derecha) */}
+          <div className="d-flex align-items-center ms-auto">
+            <button
+              className="btn btn-outline-light me-2"
+              onClick={() => setShowModal(true)}
+            >
               <i className="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+            </button>
+            <Link to="/cart" className="btn btn-outline-light">
+              <i className="bi bi-cart"></i>
+            </Link>
           </div>
+        </div>
+      </nav>
 
-          {/* Lista de sugerencias */}
+      {/* Modal de búsqueda */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Buscar productos</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            className="form-control mb-3"
+            placeholder="Escribe para buscar..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+
           {searchTerm && suggestions.length > 0 && (
-            <ul className="list-group position-absolute w-100" style={{ zIndex: 1000 }}>
+            <ul className="list-group mb-3">
               {suggestions.map((s, idx) => (
                 <li
                   key={idx}
                   className="list-group-item list-group-item-action"
                   onClick={() => {
-                    setSearchTerm(s);
-                    onSearch(s);
+                    setShowModal(false);
+                    navigate(`/product/${s.id}`);
                   }}
                 >
-                  {s}
+                  {s.name}
                 </li>
               ))}
             </ul>
           )}
-        </div>
 
-        {/* Botón carrito */}
-        <Link to="/cart" className="btn btn-outline-light">
-          <i className="bi bi-cart"></i> Carrito
-        </Link>
-      </div>
-    </nav>
+          <button
+            className="btn btn-secondary w-100"
+            onClick={() => {
+              setSearchTerm("");
+              onSearch("");
+              setShowModal(false);
+            }}
+          >
+            Ver todos los productos
+          </button>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
 

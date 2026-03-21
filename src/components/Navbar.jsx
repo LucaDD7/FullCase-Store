@@ -11,7 +11,7 @@ function Navbar({ onSearch, suggestions }) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
       <Link className="navbar-brand" to="/">FullCase Store</Link>
 
       <div className="ms-auto d-flex align-items-center">
@@ -24,7 +24,7 @@ function Navbar({ onSearch, suggestions }) {
             <input
               type="text"
               className="form-control"
-              placeholder="Buscar producto..."
+              placeholder="Buscar..."
               value={searchTerm}
               onChange={handleSearch}
             />

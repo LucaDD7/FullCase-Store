@@ -62,7 +62,7 @@ function Catalog({ searchTerm, setSuggestions }) {
               )}
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">Modelo: {product.model}</p>
+                <p className="card-text"><strong>Modelo:</strong> {product.model}</p>
                 <p className="card-text fw-bold">${product.price}</p>
                 <p className="card-text">Stock: {product.stock}</p>
                 <button

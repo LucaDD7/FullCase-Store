@@ -16,7 +16,8 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {location.pathname !== "/cart" && (
         <Navbar onSearch={setSearchTerm} suggestions={suggestions} />
       )}
-
+      <br />
+      <br />
       {/* Header solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
         <header className="bg-primary text-white text-center py-5">

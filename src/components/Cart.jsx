@@ -7,28 +7,27 @@ function Cart() {
   if (cart.length === 0) {
     return (
       <div className="text-center my-5">
+        <h2 className="mb-4">Tu Carrito</h2>
         <p>Aún no has agregado productos a tu compra.</p>
-
-        {/* Botón centrado para volver */}
-        <div className="mt-4">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        {/* Botón centrado abajo */}
+        <div className="mt-5 text-center">
           <Link to="/" className="btn btn-primary">
-            ← Cerrar y continuar comprando
+            ← Cerrar y seguir comprando
           </Link>
         </div>
       </div>
@@ -37,17 +36,17 @@ function Cart() {
 
   return (
     <div className="container my-5 text-center">
-      <h2 className="mb-4">Tu Carrito de Compras</h2>
+      <h2 className="mb-4">Tu Carrito</h2>
       
       <div className="row">
         {cart.map((item) => (
           <div key={item.id} className="col-md-4 mb-4">
             <div className="card h-100 shadow-sm">
-              <img src={item.image} className="card-img-top" alt={item.name} />
+              <img src={item.image} className="card-img-top" />
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{item.name}</h5>
                 <p className="card-text"><strong>Modelo:</strong> {item.model}</p>
-                <p className="card-text">Precio: ${item.price}</p>
+                <p className="card-text"><strong>${item.price}</strong></p>
                 <button
                   className="btn btn-danger mt-auto"
                   onClick={() => removeFromCart(item.id)}
@@ -61,20 +60,30 @@ function Cart() {
       </div>
 
       <div className="mt-4">
-        <h4>Subtotal: ${subtotal.toFixed(2)}</h4>
+        <h5>Subtotal: ${subtotal}</h5>
         {discount > 0 && (
           <h5 className="text-success">
-            Descuento aplicado (15%): -${discount.toFixed(2)}
+            Descuento aplicado (15%): -${discount}
           </h5>
         )}
-        <h3>Total a pagar: ${total.toFixed(2)}</h3>
+        <h3>Importe total: ${total}</h3>
       </div>
 
+      {/* Botones de acción */}
       <div className="mt-3">
-        <button className="btn btn-secondary me-2" onClick={clearCart}>
-          Vaciar carrito
-        </button>
+        {cart.length > 0 && (
+          <button className="btn btn-secondary me-2" onClick={clearCart}>
+            Vaciar carrito
+          </button>
+        )}
         <button className="btn btn-success">Finalizar compra</button>
+      </div>
+
+      {/* Botón centrado abajo del todo */}
+      <div className="mt-5 text-center">
+        <Link to="/" className="btn btn-primary">
+          ← Cerrar y seguir comprando
+        </Link>
       </div>
     </div>
   );

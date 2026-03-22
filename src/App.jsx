@@ -18,6 +18,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       )}
       <br />
       <br />
+
       {/* Header solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
         <header className="bg-primary text-white text-center py-5">
@@ -40,10 +41,72 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
 
       {/* Footer solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
-        <footer className="bg-dark text-white text-center py-3">
-          <p>© Copyright 2026 / FullCase Store </p>
-        </footer>
-      )}
+  <>
+    {/* Primer footer: suscripción + redes */}
+    <footer className="footer-top pt-5 bg-dark text-white">
+      <div className="container">
+        {/* Suscripción */}
+        <div className="row mb-5 text-center">
+          <div className="col-md-3">
+            <h5>Suscribite aquí:</h5>
+            <br />
+            <form className="d-flex">
+              <input
+                type="email"
+                className="form-control me-2"
+                placeholder="TU EMAIL:"
+              />
+              <button type="submit" className="btn btn-warning">
+                Enviar
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Redes sociales */}
+        <div className="row pt-4">
+          <div className="col text-center social-icons">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="me-3">
+              <i className="bi bi-facebook"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="me-3">
+              <i className="bi bi-instagram"></i>
+            </a>
+            <a href="https://wa.me/598XXXXXXXX" target="_blank" rel="noopener noreferrer">
+              <i className="bi bi-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    {/* Segundo footer: logo + pagos + copyright */}
+    <footer className="custom-footer bg-black pt-5 text-white">
+      <div className="container">
+        {/* Logo y medios de pago */}
+        <div className="row mb-5">
+          <div className="col text-center">
+            <img src="/images/FullCase img.png" alt="FullCase Logo" height="50" className="me-2"/>
+            <strong className="text-white" >FullCase</strong>
+            <div className="d-flex justify-content-center flex-wrap payment-logos mt-3">
+              <img src="/images/visa.png" alt="Visa" />
+              <img src="/images/mastercard.png" alt="Mastercard" />
+              <img src="/images/oca.png" alt="OCA" />
+              <img src="/images/paypal.png" alt="Scotiabank" />
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="row">
+          <div className="col text-center">
+            <p className="mb-0">© Copyright 2026 / FullCase Store</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </>
+)}
     </>
   );
 }

@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from 'react';
 import { supabase } from '../supabaseClient';
 
-const CartContext = createContext();
+// ✅ Exportamos el contexto
+export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
@@ -12,10 +13,10 @@ export function CartProvider({ children }) {
 
     // Reducir stock en Supabase
     const { error } = await supabase
-  .from('products')
-  .update({ stock: product.stock - 1 })
-  .eq('id', product.id)
-  .select(); // 👈 importante: devuelve el producto actualizado
+      .from('products')
+      .update({ stock: product.stock - 1 })
+      .eq('id', product.id)
+      .select();
 
     if (error) {
       console.error("Error al actualizar stock:", error);
@@ -57,8 +58,6 @@ export function CartProvider({ children }) {
 
   // Finalizar compra (no devuelve stock)
   const finalizePurchase = async () => {
-    // acá podrías registrar la orden en otra tabla "orders"
-    // y limpiar el carrito sin devolver stock
     setCart([]);
   };
 
@@ -82,4 +81,5 @@ export function CartProvider({ children }) {
   );
 }
 
+// Hook para usar el contexto
 export const useCart = () => useContext(CartContext);

@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { CartProvider } from "./context/CartContext";
@@ -19,14 +21,31 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       <br />
       <br />
 
-      {/* Header solo si NO estamos en /cart */}
+      {/* Carrusel solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
-        <header className="bg-primary text-white text-center py-5">
-          <br />
-          <br />
-          <h1>Bienvenido a FullCase Store</h1>
-          <p>Las mejores fundas para tu celular</p>
-        </header>
+        <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" >
+          <div className="carousel-inner" >
+            <div className="carousel-item active">
+              <img src="/images/Fondo1.png" className="d-block w-100" alt="Banner 1" />
+            </div>
+            <div className="carousel-item">
+              <img src="/images/Fondo2.png" className="d-block w-100" alt="Banner 2" />
+            </div>
+            <div className="carousel-item">
+              <img src="/images/Fondo3.png" className="d-block w-100" alt="Banner 3" />
+            </div>
+          </div>
+
+          {/* Controles */}
+          <button className="carousel-control-prev" type="button" data-bs-target="#headerCarousel" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Anterior</span>
+          </button>
+          <button className="carousel-control-next" type="button" data-bs-target="#headerCarousel" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Siguiente</span>
+          </button>
+        </div>
       )}
 
       <main className="container my-5">
@@ -39,74 +58,70 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
         </Routes>
       </main>
 
-      {/* Footer solo si NO estamos en /cart */}
+      {/* Footers solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
-  <>
-    {/* Primer footer: suscripción + redes */}
-    <footer className="footer-top pt-5 bg-dark text-white">
-      <div className="container">
-        {/* Suscripción */}
-        <div className="row mb-5 text-center">
-          <div className="col-md-3">
-            <h5>Suscribite aquí:</h5>
-            <br />
-            <form className="d-flex">
-              <input
-                type="email"
-                className="form-control me-2"
-                placeholder="TU EMAIL:"
-              />
-              <button type="submit" className="btn btn-warning">
-                Enviar
-              </button>
-            </form>
-          </div>
-        </div>
+        <>
+        <footer className="footer-top bg-secondary text-white py-5">
+  <div className="container">
+    <div className="row justify-content-center text-center">
+      {/* Suscripción */}
+      <div className="col-12 col-md-8 mb-4">
+        <h5 className="mb-3">Suscribite aquí:</h5>
+        <form className="d-flex flex-column flex-sm-row justify-content-center">
+          <input
+            type="email"
+            className="form-control me-sm-2 mb-2 mb-sm-0"
+            placeholder="TU EMAIL:"
+          />
+          <button type="submit" className="btn btn-warning w-150 w-sm-auto">
+            Enviar
+          </button>
+        </form>
+      </div>
 
-        {/* Redes sociales */}
-        <div className="row pt-4">
-          <div className="col text-center social-icons">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="me-3">
-              <i className="bi bi-facebook"></i>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="me-3">
-              <i className="bi bi-instagram"></i>
-            </a>
-            <a href="https://wa.me/598XXXXXXXX" target="_blank" rel="noopener noreferrer">
-              <i className="bi bi-whatsapp"></i>
-            </a>
-          </div>
+      {/* Redes sociales */}
+      <div className="col-12 col-md-8">
+        <h5 className="mb-3">Nuestras redes:</h5>
+        <div className="d-flex justify-content-center">
+          <a href="https://www.instagram.com/full.caseuy/" target="_blank" rel="noopener noreferrer" className="me-3 fs-4 text-white">
+            <i className="bi bi-instagram"></i>
+          </a>
+          <a href="https://wa.me/598XXXXXXXX" target="_blank" rel="noopener noreferrer" className="fs-4 text-white">
+            <i className="bi bi-whatsapp"></i>
+          </a>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
+</footer>
 
-    {/* Segundo footer: logo + pagos + copyright */}
-    <footer className="custom-footer bg-black pt-5 text-white">
-      <div className="container">
-        {/* Logo y medios de pago */}
-        <div className="row mb-5">
-          <div className="col text-center">
-            <img src="/images/FullCase img.png" alt="FullCase Logo" height="50" className="me-2"/>
-            <strong className="text-white" >FullCase</strong>
-            <div className="d-flex justify-content-center flex-wrap payment-logos mt-3">
-              <img src="/images/visa.png" alt="Visa" />
-              <img src="/images/mastercard.png" alt="Mastercard" />
-              <img src="/images/oca.png" alt="OCA" />
-              <img src="/images/paypal.png" alt="Scotiabank" />
-            </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="row">
-          <div className="col text-center">
-            <p className="mb-0">© Copyright 2026 / FullCase Store</p>
-          </div>
+          {/* Segundo footer: logo + pagos + copyright */}
+          <footer className="footer-top bg-black text-white pt-5">
+  <div className="container">
+    <div className="row mb-4">
+      <div className="col-12 text-center">
+        <img src="/images/FullCase img.png" alt="FullCase Logo" height="50" className="me-2"/>
+        <strong className="text-white">FullCase</strong>
+        <br />
+        <br />
+        <div className="d-flex justify-content-center flex-wrap payment-logos mt-3">
+          <img src="/images/visa.png" alt="Visa" className="mx-2 mb-2"/>
+          <img src="/images/mastercard.png" alt="Mastercard" className="mx-2 mb-2"/>
+          <img src="/images/oca.png" alt="OCA" className="mx-2 mb-2"/>
+          <img src="/images/paypal.png" alt="MercadoPago" className="mx-2 mb-2"/>
+          <img src="/images/paypal.png" alt="Scotiabank" className="mx-2 mb-2"/>
         </div>
       </div>
-    </footer>
-  </>
-)}
+    </div>
+    <div className="row">
+      <div className="col-12 text-center">
+        <p className="mb-0">© Copyright 2026 / FullCase Store</p>
+      </div>
+    </div>
+  </div>
+</footer>
+        </>
+      )}
     </>
   );
 }

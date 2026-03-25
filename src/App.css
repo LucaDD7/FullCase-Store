@@ -1,0 +1,11 @@
+.footer-top {
+  min-height: 250px; /* más alto */
+}
+
+.footer-top h5 {
+  font-weight: 600;
+}
+
+.footer-top .form-control {
+  max-width: 300px;
+}

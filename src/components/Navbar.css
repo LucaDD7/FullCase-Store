@@ -1,0 +1,53 @@
+/* Mostrar dropdown al pasar el mouse en pantallas grandes */
+@media (min-width: 992px) {
+  .navbar .dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* evita salto */
+  }
+}
+
+/* Estilo general del menú */
+.navbar .nav-link {
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #0d6efd; /* azul Bootstrap */
+}
+
+/* Dropdown */
+.navbar .dropdown-menu {
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 200px;
+}
+
+.navbar .dropdown-item {
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+/* Responsive: botones alineados en móviles */
+@media (max-width: 768px) {
+  .navbar .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.brand-text {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 800; /* bien grueso */
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+  color: #000; /* negro sólido */
+}

@@ -18,7 +18,6 @@ function Catalog({ searchTerm, setSuggestions }) {
     fetchProducts();
   }, []);
 
-  // Generar sugerencias dinámicas SIEMPRE dentro de un useEffect
   useEffect(() => {
     if (searchTerm) {
       const matches = products
@@ -28,7 +27,7 @@ function Catalog({ searchTerm, setSuggestions }) {
             p.model.toLowerCase().includes(searchTerm.toLowerCase())
         )
         .map((p) => `${p.name} (${p.model})`);
-      setSuggestions(matches.slice(0, 5)); // máximo 5 sugerencias
+      setSuggestions(matches.slice(0, 5));
     } else {
       setSuggestions([]);
     }
@@ -36,7 +35,6 @@ function Catalog({ searchTerm, setSuggestions }) {
 
   if (products.length === 0) return <p>No hay productos disponibles.</p>;
 
-  // Filtrar productos por nombre o modelo
   const filteredProducts = products.filter(
     (p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -45,12 +43,12 @@ function Catalog({ searchTerm, setSuggestions }) {
 
   return (
     <div className="row">
-      {filteredProducts.map(product => {
-        const inCart = cart.some(p => p.id === product.id);
+      {filteredProducts.map((product) => {
+        const inCart = cart.some((p) => p.id === product.id);
         const noStock = product.stock <= 0 || inCart;
 
         return (
-          <div className="col-md-4 mb-4" key={product.id}>
+          <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
             <div className="card h-100 shadow-sm">
               {product.image_url && (
                 <img

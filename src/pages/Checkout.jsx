@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../supabaseClient";
-import MercadoPagoPayment from "../components/MercadoPagoPayment";
+import StripePayment from "../components/StripePayment";
 import "./Checkout.css";
 
 function Checkout() {
@@ -151,7 +151,7 @@ function Checkout() {
               ) : (
                 <>
                   <h4 className="mb-4">Información de pago</h4>
-                  <MercadoPagoPayment
+                  <StripePayment
                     cartTotal={cartTotal}
                     onSuccess={handlePaymentSuccess}
                     onError={(err) => {
@@ -172,36 +172,32 @@ function Checkout() {
 
             {/* Resumen de orden */}
             <div className="col-md-4">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Resumen de orden</h5>
-                  <hr />
-                  <div className="mb-3">
-                    <h6>Cliente:</h6>
-                    <p className="text-muted">{formData.name || "Nombre no especificado"}</p>
-                  </div>
-                  <div className="mb-3">
-                    <h6>Email:</h6>
-                    <p className="text-muted">{formData.email || "Email no especificado"}</p>
-                  </div>
-                  <div className="mb-3">
-                    <h6>Dirección:</h6>
-                    <p className="text-muted">{formData.address || "Dirección no especificada"}</p>
-                  </div>
-                  <hr />
-                  <h6 className="mb-3">Artículos:</h6>
-                  {cart.map((item, idx) => (
-                    <div key={idx} className="d-flex justify-content-between mb-2 small">
-                      <span>{item.name} x{item.quantity || 1}</span>
-                      <span>${(item.price * (item.quantity || 1)).toLocaleString()}</span>
-                    </div>
-                  ))}
-                  <hr />
-                  <div className="d-flex justify-content-between">
-                    <strong>Total:</strong>
-                    <strong>${cartTotal.toLocaleString()}</strong>
-                  </div>
+              <h5>Resumen de orden</h5>
+              <hr />
+              <div className="mb-3">
+                <h6>Cliente:</h6>
+                <p className="text-muted">{formData.name || "Nombre no especificado"}</p>
+              </div>
+              <div className="mb-3">
+                <h6>Email:</h6>
+                <p className="text-muted">{formData.email || "Email no especificado"}</p>
+              </div>
+              <div className="mb-3">
+                <h6>Dirección:</h6>
+                <p className="text-muted">{formData.address || "Dirección no especificada"}</p>
+              </div>
+              <hr />
+              <h6 className="mb-3">Artículos:</h6>
+              {cart.map((item, idx) => (
+                <div key={idx} className="d-flex justify-content-between mb-2 small">
+                  <span>{item.name} x{item.quantity || 1}</span>
+                  <span>${(item.price * (item.quantity || 1)).toLocaleString()}</span>
                 </div>
+              ))}
+              <hr />
+              <div className="d-flex justify-content-between">
+                <strong>Total:</strong>
+                <strong>${cartTotal.toLocaleString()}</strong>
               </div>
             </div>
           </div>

@@ -108,9 +108,8 @@ function Checkout() {
         </div>
       ) : (
         <>
-          <div>
-            {!showPayment ? (
-              <form onSubmit={handleContinueToPayment} className="row g-3">
+          {!showPayment ? (
+            <form onSubmit={handleContinueToPayment} className="row g-3">
                 <div className="col-12 col-md-6">
                   <label className="form-label">Nombre</label>
                   <input
@@ -167,8 +166,7 @@ function Checkout() {
                 </button>
               </>
             )}
-          </div>
-        </>
+          </>
       )}
     </div>
   );

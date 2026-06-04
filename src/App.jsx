@@ -22,8 +22,8 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       <br />
       <br />
 
-      {/* Carrusel solo si NO estamos en /cart */}
-      {location.pathname !== "/cart" && (
+      {/* Carrusel solo si NO estamos en /cart o /checkout */}
+      {location.pathname !== "/cart" && location.pathname !== "/checkout" && (
         <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" >
           <div className="carousel-inner" >
             <div className="carousel-item active">

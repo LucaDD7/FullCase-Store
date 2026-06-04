@@ -8,6 +8,7 @@ import { CartProvider } from "./context/CartContext";
 import Navbar from "./components/Navbar";
 import Catalog from "./pages/Catalog";
 import Cart from "./components/Cart";
+import Checkout from "./pages/Checkout";
 
 function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
   const location = useLocation();
@@ -55,6 +56,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
             element={<Catalog searchTerm={searchTerm} setSuggestions={setSuggestions} />}
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
 

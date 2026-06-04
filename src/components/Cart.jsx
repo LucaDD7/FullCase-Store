@@ -76,7 +76,7 @@ function Cart() {
             Vaciar carrito
           </button>
         )}
-        <button className="btn btn-success">Finalizar compra</button>
+        <Link to="/checkout" className="btn btn-success">Finalizar compra</Link>
       </div>
 
       {/* Botón centrado abajo del todo */}

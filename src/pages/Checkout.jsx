@@ -108,98 +108,65 @@ function Checkout() {
         </div>
       ) : (
         <>
-          <div className="row">
-            <div className="col-md-8">
-              {!showPayment ? (
-                <form onSubmit={handleContinueToPayment} className="row g-3">
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Nombre</label>
-                    <input
-                      type="text"
-                      name="name"
-                      className="form-control"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="form-control"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-12">
-                    <label className="form-label">Dirección</label>
-                    <input
-                      type="text"
-                      name="address"
-                      className="form-control"
-                      value={formData.address}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary">
-                      Continuar con el pago
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <>
-                  <h4 className="mb-4">Información de pago</h4>
-                  <StripePayment
-                    cartTotal={cartTotal}
-                    onSuccess={handlePaymentSuccess}
-                    onError={(err) => {
-                      setError(err);
-                      setShowPayment(false);
-                    }}
-                    loading={loading}
+          <div>
+            {!showPayment ? (
+              <form onSubmit={handleContinueToPayment} className="row g-3">
+                <div className="col-12 col-md-6">
+                  <label className="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    name="name"
+                    className="form-control"
+                    value={formData.name}
+                    onChange={handleChange}
                   />
-                  <button
-                    className="btn btn-secondary mt-3"
-                    onClick={() => setShowPayment(false)}
-                  >
-                    Volver
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Resumen de orden */}
-            <div className="col-md-4">
-              <h5>Resumen de orden</h5>
-              <hr />
-              <div className="mb-3">
-                <h6>Cliente:</h6>
-                <p className="text-muted">{formData.name || "Nombre no especificado"}</p>
-              </div>
-              <div className="mb-3">
-                <h6>Email:</h6>
-                <p className="text-muted">{formData.email || "Email no especificado"}</p>
-              </div>
-              <div className="mb-3">
-                <h6>Dirección:</h6>
-                <p className="text-muted">{formData.address || "Dirección no especificada"}</p>
-              </div>
-              <hr />
-              <h6 className="mb-3">Artículos:</h6>
-              {cart.map((item, idx) => (
-                <div key={idx} className="d-flex justify-content-between mb-2 small">
-                  <span>{item.name} x{item.quantity || 1}</span>
-                  <span>${(item.price * (item.quantity || 1)).toLocaleString()}</span>
                 </div>
-              ))}
-              <hr />
-              <div className="d-flex justify-content-between">
-                <strong>Total:</strong>
-                <strong>${cartTotal.toLocaleString()}</strong>
-              </div>
-            </div>
+                <div className="col-12 col-md-6">
+                  <label className="form-label">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-12">
+                  <label className="form-label">Dirección</label>
+                  <input
+                    type="text"
+                    name="address"
+                    className="form-control"
+                    value={formData.address}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-12">
+                  <button type="submit" className="btn btn-primary">
+                    Continuar con el pago
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <>
+                <h4 className="mb-4">Información de pago</h4>
+                <StripePayment
+                  cartTotal={cartTotal}
+                  onSuccess={handlePaymentSuccess}
+                  onError={(err) => {
+                    setError(err);
+                    setShowPayment(false);
+                  }}
+                  loading={loading}
+                />
+                <button
+                  className="btn btn-secondary mt-3"
+                  onClick={() => setShowPayment(false)}
+                >
+                  Volver
+                </button>
+              </>
+            )}
           </div>
         </>
       )}

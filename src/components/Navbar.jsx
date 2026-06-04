@@ -96,7 +96,7 @@ function Navbar({ onSearch, suggestions }) {
     </li>
   </ul>
 
-          <div className="ms-auto d-flex align-items-center">
+          <div className="navbar-buttons ms-auto d-flex align-items-center">
           {/* Botón lupa con texto */}
           <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowModal(true)}>
             <i className="bi bi-search me-2"></i>

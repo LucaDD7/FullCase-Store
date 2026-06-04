@@ -37,7 +37,12 @@
 }
 
 /* Responsive: botones alineados en móviles */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
+  .navbar-buttons {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
   .navbar .btn {
     width: 100%;
     margin-bottom: 0.5rem;

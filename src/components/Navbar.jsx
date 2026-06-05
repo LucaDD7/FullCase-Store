@@ -233,17 +233,6 @@ function Navbar({ onSearch, suggestions }) {
               )}
             </>
           )}
-
-          <button
-            className="btn btn-secondary w-100"
-            onClick={() => {
-              setSearchTerm("");
-              onSearch("");
-              setShowModal(false);
-            }}
-          >
-            Ver todos los productos
-          </button>
         </Modal.Body>
       </Modal>
 

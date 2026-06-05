@@ -95,8 +95,9 @@ function Navbar({ onSearch, suggestions }) {
       </ul>
     </li>
   </ul>
+        </div>
 
-          <div className="navbar-buttons ms-auto d-flex align-items-center">
+        <div className="navbar-buttons d-flex align-items-center">
           {/* Botón lupa con texto */}
           <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowModal(true)}>
             <i className="bi bi-search me-2"></i>
@@ -114,7 +115,6 @@ function Navbar({ onSearch, suggestions }) {
               <span className="fw-bold">${cartTotal.toLocaleString()}</span>
             </Link>
           </div>
-        </div>
       </nav>
 
       {/* Modal de búsqueda */}

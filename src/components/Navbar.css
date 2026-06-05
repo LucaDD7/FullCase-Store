@@ -53,6 +53,10 @@
   margin-right: 0 !important;
 }
 
+.collapse {
+  order: 4;
+}
+
 /* Responsive: botones alineados en móviles */
 @media (max-width: 991px) {
   .navbar {

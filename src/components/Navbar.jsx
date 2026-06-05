@@ -40,61 +40,113 @@ function Navbar({ onSearch, suggestions }) {
         <button
           className="navbar-toggler ms-2"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        {/* Menú lateral offcanvas */}
+        <div className="offcanvas offcanvas-start" tabIndex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="sidebarMenuLabel">Menú</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div className="offcanvas-body">
+            <ul className="navbar-nav flex-column">
+              {/* MODELO */}
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="modeloDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  MODELO
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="modeloDropdown">
+                  <li><a className="dropdown-item" href="#">Iphone 11 pro</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 13</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 13 pro</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 14</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 14 pro</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 15</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 15 pro</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 16</a></li>
+                  <li><a className="dropdown-item" href="#">Iphone 17</a></li>
+                </ul>
+              </li>
 
+              {/* CUERO */}
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="cueroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  CUERO
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="cueroDropdown">
+                  <li><a className="dropdown-item" href="#">Tarjetero</a></li>
+                  <li><a className="dropdown-item" href="#">Premium</a></li>
+                  <li><a className="dropdown-item" href="#">Magnética</a></li>
+                  <li><a className="dropdown-item" href="#">Elegante</a></li>
+                </ul>
+              </li>
 
-        <div className="collapse navbar-collapse" id="navbarContent">
-  <ul className="navbar-nav mx-auto">
-    {/* MODELO */}
-    <li className="nav-item dropdown">
-      <a className="nav-link dropdown-toggle" href="#" id="modeloDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        MODELO
-      </a>
-      <ul className="dropdown-menu" aria-labelledby="modeloDropdown">
-        <li><a className="dropdown-item" href="#">Iphone 11 pro</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 13</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 13 pro</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 14</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 14 pro</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 15</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 15 pro</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 16</a></li>
-        <li><a className="dropdown-item" href="#">Iphone 17</a></li>
-      </ul>
-    </li>
+              {/* PERSONALIZADO */}
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  PERSONALIZADO
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="personalizadoDropdown">
+                  <li><a className="dropdown-item" href="#">Formula 1</a></li>
+                  <li><a className="dropdown-item" href="#">Transparente</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-    {/* CUERO */}
-    <li className="nav-item dropdown">
-      <a className="nav-link dropdown-toggle" href="#" id="cueroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        CUERO
-      </a>
-      <ul className="dropdown-menu" aria-labelledby="cueroDropdown">
-        <li><a className="dropdown-item" href="#">Tarjetero</a></li>
-        <li><a className="dropdown-item" href="#">Premium</a></li>
-        <li><a className="dropdown-item" href="#">Magnética</a></li>
-        <li><a className="dropdown-item" href="#">Elegante</a></li>
-      </ul>
-    </li>
+        {/* Menú horizontal para pantallas grandes */}
+        <div className="navbar-collapse d-none d-lg-flex ms-auto">
+          <ul className="navbar-nav mx-auto">
+            {/* MODELO */}
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                MODELO
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="modeloDropdownLg">
+                <li><a className="dropdown-item" href="#">Iphone 11 pro</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 13</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 13 pro</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 14</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 14 pro</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 15</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 15 pro</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 16</a></li>
+                <li><a className="dropdown-item" href="#">Iphone 17</a></li>
+              </ul>
+            </li>
 
-    {/* PERSONALIZADO */}
-    <li className="nav-item dropdown">
-      <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        PERSONALIZADO
-      </a>
-      <ul className="dropdown-menu" aria-labelledby="personalizadoDropdown">
-        <li><a className="dropdown-item" href="#">Formula 1</a></li>
-        <li><a className="dropdown-item" href="#">Transparente</a></li>
-      </ul>
-    </li>
-  </ul>
+            {/* CUERO */}
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="cueroDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                CUERO
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="cueroDropdownLg">
+                <li><a className="dropdown-item" href="#">Tarjetero</a></li>
+                <li><a className="dropdown-item" href="#">Premium</a></li>
+                <li><a className="dropdown-item" href="#">Magnética</a></li>
+                <li><a className="dropdown-item" href="#">Elegante</a></li>
+              </ul>
+            </li>
+
+            {/* PERSONALIZADO */}
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                PERSONALIZADO
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="personalizadoDropdownLg">
+                <li><a className="dropdown-item" href="#">Formula 1</a></li>
+                <li><a className="dropdown-item" href="#">Transparente</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
 
         <div className="navbar-buttons d-flex align-items-center">

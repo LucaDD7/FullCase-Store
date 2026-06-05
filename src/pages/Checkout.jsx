@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { supabase } from "../supabaseClient";
-import StripePayment from "../components/StripePayment";
+import MercadoPagoPayment from "../components/MercadoPagoPayment";
 import "./Checkout.css";
 
 function Checkout() {
@@ -149,7 +149,7 @@ function Checkout() {
             ) : (
               <>
                 <h4 className="mb-4">Información de pago</h4>
-                <StripePayment
+                <MercadoPagoPayment
                   cartTotal={cartTotal}
                   onSuccess={handlePaymentSuccess}
                   onError={(err) => {

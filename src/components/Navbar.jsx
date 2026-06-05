@@ -80,15 +80,15 @@ function Navbar({ onSearch, suggestions }) {
                   MODELO
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="modeloDropdown">
-                  <li><a className="dropdown-item" href="#">Iphone 11 pro</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 13</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 13 pro</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 14</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 14 pro</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 15</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 15 pro</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 16</a></li>
-                  <li><a className="dropdown-item" href="#">Iphone 17</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 11 pro"); }} data-bs-dismiss="offcanvas">Iphone 11 pro</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13"); }} data-bs-dismiss="offcanvas">Iphone 13</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13 pro"); }} data-bs-dismiss="offcanvas">Iphone 13 pro</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14"); }} data-bs-dismiss="offcanvas">Iphone 14</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14 pro"); }} data-bs-dismiss="offcanvas">Iphone 14 pro</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15"); }} data-bs-dismiss="offcanvas">Iphone 15</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15 pro"); }} data-bs-dismiss="offcanvas">Iphone 15 pro</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 16"); }} data-bs-dismiss="offcanvas">Iphone 16</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 17"); }} data-bs-dismiss="offcanvas">Iphone 17</a></li>
                 </ul>
               </li>
 
@@ -98,10 +98,10 @@ function Navbar({ onSearch, suggestions }) {
                   CUERO
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="cueroDropdown">
-                  <li><a className="dropdown-item" href="#">Tarjetero</a></li>
-                  <li><a className="dropdown-item" href="#">Premium</a></li>
-                  <li><a className="dropdown-item" href="#">Magnética</a></li>
-                  <li><a className="dropdown-item" href="#">Elegante</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Tarjetero"); }} data-bs-dismiss="offcanvas">Tarjetero</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Premium"); }} data-bs-dismiss="offcanvas">Premium</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Magnética"); }} data-bs-dismiss="offcanvas">Magnética</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Elegante"); }} data-bs-dismiss="offcanvas">Elegante</a></li>
                 </ul>
               </li>
 
@@ -111,8 +111,8 @@ function Navbar({ onSearch, suggestions }) {
                   PERSONALIZADO
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="personalizadoDropdown">
-                  <li><a className="dropdown-item" href="#">Formula 1</a></li>
-                  <li><a className="dropdown-item" href="#">Transparente</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Formula 1"); }} data-bs-dismiss="offcanvas">Formula 1</a></li>
+                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Transparente"); }} data-bs-dismiss="offcanvas">Transparente</a></li>
                 </ul>
               </li>
             </ul>
@@ -128,15 +128,15 @@ function Navbar({ onSearch, suggestions }) {
                 MODELO
               </a>
               <ul className="dropdown-menu" aria-labelledby="modeloDropdownLg">
-                <li><a className="dropdown-item" href="#">Iphone 11 pro</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 13</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 13 pro</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 14</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 14 pro</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 15</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 15 pro</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 16</a></li>
-                <li><a className="dropdown-item" href="#">Iphone 17</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 11 pro"); }}>Iphone 11 pro</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13"); }}>Iphone 13</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13 pro"); }}>Iphone 13 pro</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14"); }}>Iphone 14</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14 pro"); }}>Iphone 14 pro</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15"); }}>Iphone 15</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15 pro"); }}>Iphone 15 pro</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 16"); }}>Iphone 16</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 17"); }}>Iphone 17</a></li>
               </ul>
             </li>
 
@@ -146,10 +146,10 @@ function Navbar({ onSearch, suggestions }) {
                 CUERO
               </a>
               <ul className="dropdown-menu" aria-labelledby="cueroDropdownLg">
-                <li><a className="dropdown-item" href="#">Tarjetero</a></li>
-                <li><a className="dropdown-item" href="#">Premium</a></li>
-                <li><a className="dropdown-item" href="#">Magnética</a></li>
-                <li><a className="dropdown-item" href="#">Elegante</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Tarjetero"); }}>Tarjetero</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Premium"); }}>Premium</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Magnética"); }}>Magnética</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Elegante"); }}>Elegante</a></li>
               </ul>
             </li>
 
@@ -159,8 +159,8 @@ function Navbar({ onSearch, suggestions }) {
                 PERSONALIZADO
               </a>
               <ul className="dropdown-menu" aria-labelledby="personalizadoDropdownLg">
-                <li><a className="dropdown-item" href="#">Formula 1</a></li>
-                <li><a className="dropdown-item" href="#">Transparente</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Formula 1"); }}>Formula 1</a></li>
+                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Transparente"); }}>Transparente</a></li>
               </ul>
             </li>
           </ul>

@@ -6,7 +6,10 @@ import './Navbar.css';
 
 function Navbar({ onSearch, suggestions }) {
   const [showModal, setShowModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
   const cartCount = cart.length;
@@ -59,9 +62,14 @@ function Navbar({ onSearch, suggestions }) {
             <ul className="navbar-nav flex-column">
               {/* MI CUENTA */}
               <li className="nav-item mb-3">
-                <Link to="/login" className="nav-link fw-bold text-primary" data-bs-dismiss="offcanvas">
+                <button
+                  className="nav-link fw-bold text-primary"
+                  style={{border: 'none', background: 'none', cursor: 'pointer'}}
+                  onClick={() => setShowAccountModal(true)}
+                  data-bs-dismiss="offcanvas"
+                >
                   <i className="bi bi-person-circle me-2"></i>Mi Cuenta
-                </Link>
+                </button>
               </li>
 
               <hr />
@@ -106,22 +114,6 @@ function Navbar({ onSearch, suggestions }) {
                   <li><a className="dropdown-item" href="#">Formula 1</a></li>
                   <li><a className="dropdown-item" href="#">Transparente</a></li>
                 </ul>
-              </li>
-
-              <hr />
-
-              {/* CONTACTO */}
-              <li className="nav-item">
-                <a className="nav-link" href="#" data-bs-dismiss="offcanvas">
-                  <i className="bi bi-telephone me-2"></i>Contacto
-                </a>
-              </li>
-
-              {/* FORMAS DE PAGO */}
-              <li className="nav-item">
-                <a className="nav-link" href="#" data-bs-dismiss="offcanvas">
-                  <i className="bi bi-credit-card me-2"></i>Formas de Pago
-                </a>
               </li>
             </ul>
           </div>
@@ -250,6 +242,51 @@ function Navbar({ onSearch, suggestions }) {
           >
             Ver todos los productos
           </button>
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal de Registro */}
+      <Modal show={showAccountModal} onHide={() => setShowAccountModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Crear Cuenta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                placeholder="tu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Contraseña</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Ingresa tu contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={() => {
+                alert(`Registro: ${email}`);
+                setEmail("");
+                setPassword("");
+                setShowAccountModal(false);
+              }}
+            >
+              Registrarse
+            </button>
+          </form>
         </Modal.Body>
       </Modal>
     </>

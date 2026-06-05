@@ -60,12 +60,6 @@ function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
           cardSecurityCode: {
             id: "form-checkout_securityCode",
           },
-          issuer: {
-            id: "form-checkout_issuer",
-          },
-          installments: {
-            id: "form-checkout_installments",
-          },
         },
       });
     }, 100);
@@ -172,20 +166,6 @@ function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
             placeholder="123"
             maxLength="4"
           />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_issuer" className="form-label">
-            Banco emisor
-          </label>
-          <select id="form-checkout_issuer" className="form-select"></select>
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_installments" className="form-label">
-            Cuotas
-          </label>
-          <select id="form-checkout_installments" className="form-select"></select>
         </div>
 
         {error && <div className="alert alert-danger mb-3">{error}</div>}

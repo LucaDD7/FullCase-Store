@@ -89,7 +89,6 @@ function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
   return (
     <form id="form-checkout" onSubmit={handleSubmit} ref={formRef}>
       <div className="mp-container">
-        <h5 className="mb-4">Información de pago</h5>
 
         <div className="mb-3">
           <label htmlFor="form-checkout_cardholderName" className="form-label">

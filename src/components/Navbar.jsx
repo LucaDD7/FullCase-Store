@@ -208,8 +208,10 @@ function Navbar({ onSearch, suggestions }) {
                     key={idx}
                     className="list-group-item list-group-item-action"
                     onClick={() => {
-                      setSearchTerm(s);
-                      onSearch(s);
+                      const modelMatch = s.match(/\((.*?)\)/);
+                      const searchValue = modelMatch ? modelMatch[1] : s;
+                      setSearchTerm(searchValue);
+                      onSearch(searchValue);
                       setShowModal(false);
                     }}
                   >

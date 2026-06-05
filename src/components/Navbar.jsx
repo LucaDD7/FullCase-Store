@@ -57,6 +57,15 @@ function Navbar({ onSearch, suggestions }) {
           </div>
           <div className="offcanvas-body">
             <ul className="navbar-nav flex-column">
+              {/* MI CUENTA */}
+              <li className="nav-item mb-3">
+                <Link to="/login" className="nav-link fw-bold text-primary" data-bs-dismiss="offcanvas">
+                  <i className="bi bi-person-circle me-2"></i>Mi Cuenta
+                </Link>
+              </li>
+
+              <hr />
+
               {/* MODELO */}
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="modeloDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -97,6 +106,22 @@ function Navbar({ onSearch, suggestions }) {
                   <li><a className="dropdown-item" href="#">Formula 1</a></li>
                   <li><a className="dropdown-item" href="#">Transparente</a></li>
                 </ul>
+              </li>
+
+              <hr />
+
+              {/* CONTACTO */}
+              <li className="nav-item">
+                <a className="nav-link" href="#" data-bs-dismiss="offcanvas">
+                  <i className="bi bi-telephone me-2"></i>Contacto
+                </a>
+              </li>
+
+              {/* FORMAS DE PAGO */}
+              <li className="nav-item">
+                <a className="nav-link" href="#" data-bs-dismiss="offcanvas">
+                  <i className="bi bi-credit-card me-2"></i>Formas de Pago
+                </a>
               </li>
             </ul>
           </div>

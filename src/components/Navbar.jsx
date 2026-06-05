@@ -29,7 +29,7 @@ function Navbar({ onSearch, suggestions }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white px-5 py-0 fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white px-5 py-0 fixed-top d-flex align-items-center">
         {/* Logo */}
         <Link to="/" className="navbar-brand d-flex align-items-center" onClick={handleLogoClick}>
   <img src="/images/FullCase_img-removebg-preview.png" height="70" className="me-2" />
@@ -38,7 +38,7 @@ function Navbar({ onSearch, suggestions }) {
 
         {/* Botón hamburguesa */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler ms-2"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarContent"
@@ -49,7 +49,7 @@ function Navbar({ onSearch, suggestions }) {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        
+
 
         <div className="collapse navbar-collapse" id="navbarContent">
   <ul className="navbar-nav mx-auto">

@@ -36,37 +36,39 @@ function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
   }, [onError]);
 
   const createCardToken = (mercadopago) => {
-    mercadopago.cardToken.create({
-      amount: cartTotal.toString(),
-      autoMount: true,
-      form: {
-        id: "form-checkout",
-        cardholderName: {
-          id: "form-checkout_cardholderName",
+    setTimeout(() => {
+      mercadopago.cardToken.create({
+        amount: cartTotal.toString(),
+        autoMount: true,
+        form: {
+          id: "form-checkout",
+          cardholderName: {
+            id: "form-checkout_cardholderName",
+          },
+          cardholderEmail: {
+            id: "form-checkout_cardholderEmail",
+          },
+          cardNumber: {
+            id: "form-checkout_cardNumber",
+          },
+          cardExpirationMonth: {
+            id: "form-checkout_cardExpirationMonth",
+          },
+          cardExpirationYear: {
+            id: "form-checkout_cardExpirationYear",
+          },
+          cardSecurityCode: {
+            id: "form-checkout_securityCode",
+          },
+          issuer: {
+            id: "form-checkout_issuer",
+          },
+          installments: {
+            id: "form-checkout_installments",
+          },
         },
-        cardholderEmail: {
-          id: "form-checkout_cardholderEmail",
-        },
-        cardNumber: {
-          id: "form-checkout_cardNumber",
-        },
-        cardExpirationMonth: {
-          id: "form-checkout_cardExpirationMonth",
-        },
-        cardExpirationYear: {
-          id: "form-checkout_cardExpirationYear",
-        },
-        cardSecurityCode: {
-          id: "form-checkout_securityCode",
-        },
-        issuer: {
-          id: "form-checkout_issuer",
-        },
-        installments: {
-          id: "form-checkout_installments",
-        },
-      },
-    });
+      });
+    }, 100);
   };
 
   const handleSubmit = async (e) => {

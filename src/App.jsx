@@ -64,7 +64,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
   <div className="container">
     <div className="row justify-content-center text-center">
       {/* Suscripción */}
-      <div className="col-12 col-md-8 mb-4">
+      <div className="col-12 col-md-8 mb-4 px-0 px-md-3">
         <h5 className="mb-3">Suscribite aquí:</h5>
         <form className="d-flex flex-column flex-sm-row justify-content-center">
           <input
@@ -72,7 +72,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
             className="form-control me-sm-2 mb-2 mb-sm-0"
             placeholder="TU EMAIL:"
           />
-          <button type="submit" className="btn btn-warning w-100 w-sm-auto">
+          <button type="submit" className="btn btn-warning w-150 w-sm-auto">
             Enviar
           </button>
         </form>

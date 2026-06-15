@@ -1,46 +1,4 @@
-.mp-container {
+.mp-brick-wrapper {
   max-width: 600px;
   margin: 0 auto;
-}
-
-.mp-container .form-control,
-.mp-container .form-select {
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-}
-
-.mp-container .form-control:focus,
-.mp-container .form-select:focus {
-  border-color: #80bdff;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
-.mp-container .form-label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-.mp-container .row {
-  display: flex;
-  gap: 1rem;
-}
-
-.mp-container .col-md-6 {
-  flex: 1;
-}
-
-.mp-iframe-field {
-  height: 40px;
-  padding: 0;
-  overflow: hidden;
-}
-
-.mp-iframe-field iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
 }

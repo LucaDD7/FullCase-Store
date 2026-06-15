@@ -151,12 +151,13 @@ function Checkout() {
                 <h4 className="mb-4">Información de pago</h4>
                 <MercadoPagoPayment
                   cartTotal={cartTotal}
+                  cart={cart}
+                  customer={formData}
                   onSuccess={handlePaymentSuccess}
                   onError={(err) => {
                     setError(err);
                     setShowPayment(false);
                   }}
-                  loading={loading}
                 />
                 <button
                   className="btn btn-secondary mt-3"

@@ -1,166 +1,130 @@
 import { useEffect, useRef, useState } from "react";
+import { supabase } from "../supabaseClient";
 import "./MercadoPagoPayment.css";
 
-function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
-  const [isReady, setIsReady] = useState(false);
+function MercadoPagoPayment({ cartTotal, cart, customer, onSuccess, onError }) {
+  const [brickLoaded, setBrickLoaded] = useState(false);
   const [error, setError] = useState("");
-  const cardFormRef = useRef(null);
+  const brickControllerRef = useRef(null);
 
   useEffect(() => {
-    let mounted = true;
+    let cancelled = false;
 
-    const initMercadoPago = () => {
-      if (!window.MercadoPago) return;
+    const loadBrick = async () => {
+      if (!window.MercadoPago) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://sdk.mercadopago.com/js/v2";
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = () => reject(new Error("Error cargando el SDK de Mercado Pago"));
+          document.body.appendChild(script);
+        });
+      }
 
-      const mp = new window.MercadoPago(import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY);
-
-      const cardForm = mp.cardForm({
-        amount: cartTotal.toString(),
-        autoMount: true,
-        form: {
-          id: "form-checkout",
-          cardholderName: { id: "form-checkout_cardholderName" },
-          cardholderEmail: { id: "form-checkout_cardholderEmail" },
-          cardNumber: { id: "form-checkout_cardNumber", placeholder: "1234 5678 9012 3456" },
-          expirationDate: { id: "form-checkout_expirationDate", placeholder: "MM/YY" },
-          securityCode: { id: "form-checkout_securityCode", placeholder: "CVV" },
-          installments: { id: "form-checkout_installments" },
-          identificationType: { id: "form-checkout_identificationType" },
-          identificationNumber: { id: "form-checkout_identificationNumber" },
-          issuer: { id: "form-checkout_issuer" },
-        },
-        callbacks: {
-          onFormMounted: (err) => {
-            if (!mounted) return;
-            if (err) {
-              console.warn("Error montando el formulario:", err);
-            } else {
-              setIsReady(true);
-            }
-          },
-          onSubmit: (event) => {
-            event.preventDefault();
-            const { token } = cardForm.getCardFormData();
-            if (token) {
-              onSuccess(token);
-            } else {
-              setError("No se pudo obtener el token de pago. Verificá los datos.");
-              onError("Error al obtener token de pago");
-            }
-          },
-          onError: (errors) => {
-            if (!mounted) return;
-            const msg = errors.map((e) => e.message).join(", ");
-            setError(msg);
-          },
-        },
+      const { data, error: fnError } = await supabase.functions.invoke("create-mp-preference", {
+        body: { amount: cartTotal, items: cart, customer },
       });
 
-      cardFormRef.current = cardForm;
+      if (cancelled) return;
+
+      if (fnError || !data?.preferenceId) {
+        setError("No se pudo iniciar el pago. Verificá tu conexión e intentá de nuevo.");
+        onError("Error al crear preferencia de pago");
+        return;
+      }
+
+      const mp = new window.MercadoPago(import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY, {
+        locale: "es-UY",
+      });
+      const bricksBuilder = mp.bricks();
+
+      const settings = {
+        initialization: {
+          amount: cartTotal,
+          preferenceId: data.preferenceId,
+        },
+        customization: {
+          paymentMethods: {
+            ticket: "all",
+            bankTransfer: "all",
+            creditCard: "all",
+            debitCard: "all",
+            mercadoPago: "all",
+          },
+          visual: {
+            hideFormTitle: true,
+            style: {
+              theme: "default",
+            },
+          },
+        },
+        callbacks: {
+          onReady: () => {
+            if (!cancelled) setBrickLoaded(true);
+          },
+          onSubmit: async ({ formData }) => {
+            const { data: paymentData, error: payError } = await supabase.functions.invoke(
+              "process-mp-payment",
+              { body: { formData, amount: cartTotal, customer } }
+            );
+
+            if (payError || !paymentData?.success) {
+              const msg =
+                paymentData?.detail ||
+                "El pago no fue aprobado. Verificá los datos de tu tarjeta.";
+              setError(msg);
+              onError(msg);
+              return;
+            }
+
+            onSuccess(paymentData.paymentId.toString());
+          },
+          onError: (err) => {
+            console.error("Payment Brick error:", err);
+            if (!cancelled) {
+              setError("Error en el formulario de pago. Intentá de nuevo.");
+            }
+          },
+        },
+      };
+
+      brickControllerRef.current = await bricksBuilder.create(
+        "payment",
+        "mp-payment-brick-container",
+        settings
+      );
     };
 
-    if (window.MercadoPago) {
-      initMercadoPago();
-    } else {
-      const script = document.createElement("script");
-      script.src = "https://sdk.mercadopago.com/js/v2";
-      script.async = true;
-      script.onload = initMercadoPago;
-      script.onerror = () => {
-        if (!mounted) return;
-        setError("Error cargando Mercado Pago");
-        onError("Error cargando Mercado Pago");
-      };
-      document.body.appendChild(script);
-    }
+    loadBrick().catch((err) => {
+      if (!cancelled) {
+        setError(err.message || "Error al cargar el pago");
+        onError(err.message);
+      }
+    });
 
     return () => {
-      mounted = false;
-      if (cardFormRef.current) {
-        cardFormRef.current.unmount();
-        cardFormRef.current = null;
+      cancelled = true;
+      if (brickControllerRef.current) {
+        brickControllerRef.current.unmount();
+        brickControllerRef.current = null;
       }
     };
   }, []);
 
   return (
-    <form id="form-checkout">
-      <div className="mp-container">
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_cardholderName" className="form-label">
-            Titular de la tarjeta
-          </label>
-          <input
-            id="form-checkout_cardholderName"
-            type="text"
-            className="form-control"
-            placeholder="Nombre completo"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_cardholderEmail" className="form-label">
-            Email
-          </label>
-          <input
-            id="form-checkout_cardholderEmail"
-            type="email"
-            className="form-control"
-            placeholder="ejemplo@correo.com"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Número de tarjeta</label>
-          <div id="form-checkout_cardNumber" className="form-control mp-iframe-field" />
-        </div>
-
-        <div className="row">
-          <div className="col-md-6 mb-3">
-            <label className="form-label">Vencimiento</label>
-            <div id="form-checkout_expirationDate" className="form-control mp-iframe-field" />
+    <div className="mp-brick-wrapper">
+      {!brickLoaded && !error && (
+        <div className="text-center py-4">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Cargando...</span>
           </div>
-          <div className="col-md-6 mb-3">
-            <label className="form-label">CVV</label>
-            <div id="form-checkout_securityCode" className="form-control mp-iframe-field" />
-          </div>
+          <p className="mt-2 text-muted">Cargando métodos de pago...</p>
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_identificationType" className="form-label">
-            Tipo de documento
-          </label>
-          <select id="form-checkout_identificationType" className="form-select" />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="form-checkout_identificationNumber" className="form-label">
-            Número de documento
-          </label>
-          <input
-            id="form-checkout_identificationNumber"
-            type="text"
-            className="form-control"
-            placeholder="Número de documento"
-          />
-        </div>
-
-        {/* Campos ocultos requeridos por el SDK */}
-        <select id="form-checkout_issuer" style={{ display: "none" }} />
-        <select id="form-checkout_installments" style={{ display: "none" }} />
-
-        {error && <div className="alert alert-danger mb-3">{error}</div>}
-
-        <button
-          type="submit"
-          className="btn btn-success w-100"
-          disabled={loading || !isReady}
-        >
-          {loading ? "Procesando..." : `Pagar $${cartTotal.toLocaleString()}`}
-        </button>
-      </div>
-    </form>
+      )}
+      {error && <div className="alert alert-danger">{error}</div>}
+      <div id="mp-payment-brick-container" />
+    </div>
   );
 }
 

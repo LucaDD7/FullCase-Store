@@ -17,23 +17,25 @@
   color: #0d6efd; /* azul Bootstrap */
 }
 
-/* Dropdown */
-.navbar .dropdown-menu {
-  border-radius: 0;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* Dropdown desktop */
+.navbar-center-menu .dropdown-menu {
+  background-color: #fff !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
   min-width: 200px;
 }
 
-.navbar .dropdown-item {
+.navbar-center-menu .dropdown-item {
+  color: #212529 !important;
   font-weight: 500;
   padding: 0.5rem 1rem;
   transition: background-color 0.2s ease;
 }
 
-.navbar .dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #000;
+.navbar-center-menu .dropdown-item:hover {
+  background-color: #f8f9fa !important;
+  color: #000 !important;
 }
 
 

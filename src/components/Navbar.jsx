@@ -95,7 +95,7 @@ function Navbar({ onSearch, suggestions }) {
         </div>
 
         {/* Logo */}
-        <Link to="/" className="navbar-brand d-flex align-items-center mx-auto mx-lg-0" onClick={handleLogoClick}>
+        <Link to="/" className="navbar-brand d-flex align-items-center me-auto mx-lg-0" onClick={handleLogoClick}>
           <img src="/images/FullCase_img-removebg-preview.png" height="70" className="me-2" />
           <span className="brand-text">FullCase</span>
         </Link>

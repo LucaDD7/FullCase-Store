@@ -76,9 +76,8 @@
   }
 
   .navbar-brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    position: static;
+    transform: none;
     margin: 0 !important;
   }
 

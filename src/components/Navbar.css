@@ -55,26 +55,16 @@
   }
 }
 
-/* Responsive: botones alineados en móviles */
+/* Responsive: móviles */
 @media (max-width: 991px) {
   .navbar {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding: 0.25rem 0.5rem;
   }
 
-  .navbar-toggler {
-    order: 1;
-    padding: 0.25rem 0.5rem;
-    flex-shrink: 0;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
   .navbar-brand {
-    order: 2;
-    flex: 1;
-    text-align: center;
+    order: 1;
     margin: 0 !important;
     padding: 0;
   }
@@ -88,10 +78,23 @@
   }
 
   .navbar-buttons {
-    order: 3;
+    order: 2;
     width: auto;
     gap: 0.25rem;
     flex-shrink: 0;
+  }
+
+  .navbar-center-menu {
+    order: 3;
+    width: 100%;
+    justify-content: center !important;
+    padding: 0.25rem 0;
+    border-top: 1px solid #eee;
+  }
+
+  .navbar-center-menu .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
   }
 
   .navbar .btn {

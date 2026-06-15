@@ -39,88 +39,9 @@ function Navbar({ onSearch, suggestions }) {
   <span className="brand-text">FullCase</span>
 </Link>
 
-        {/* Botón hamburguesa */}
-        <button
-          className="navbar-toggler ms-2 d-lg-none"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#sidebarMenu"
-          aria-controls="sidebarMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
 
-        {/* Menú lateral offcanvas */}
-        <div className="offcanvas offcanvas-start" tabIndex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="sidebarMenuLabel">Menú</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div className="offcanvas-body">
-            <ul className="navbar-nav flex-column">
-              {/* MI CUENTA */}
-              <li className="nav-item mb-3">
-                <button
-                  className="nav-link fw-bold text-primary"
-                  style={{border: 'none', background: 'none', cursor: 'pointer'}}
-                  onClick={() => setShowAccountModal(true)}
-                  data-bs-dismiss="offcanvas"
-                >
-                  <i className="bi bi-person-circle me-2"></i>Mi Cuenta
-                </button>
-              </li>
-
-              <hr />
-
-              {/* MODELO */}
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="modeloDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  MODELO
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="modeloDropdown">
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 11 pro"); }} data-bs-dismiss="offcanvas">Iphone 11 pro</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13"); }} data-bs-dismiss="offcanvas">Iphone 13</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13 pro"); }} data-bs-dismiss="offcanvas">Iphone 13 pro</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14"); }} data-bs-dismiss="offcanvas">Iphone 14</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14 pro"); }} data-bs-dismiss="offcanvas">Iphone 14 pro</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15"); }} data-bs-dismiss="offcanvas">Iphone 15</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15 pro"); }} data-bs-dismiss="offcanvas">Iphone 15 pro</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 16"); }} data-bs-dismiss="offcanvas">Iphone 16</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 17"); }} data-bs-dismiss="offcanvas">Iphone 17</a></li>
-                </ul>
-              </li>
-
-              {/* CUERO */}
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="cueroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  CUERO
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="cueroDropdown">
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Tarjetero"); }} data-bs-dismiss="offcanvas">Tarjetero</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Premium"); }} data-bs-dismiss="offcanvas">Premium</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Magnética"); }} data-bs-dismiss="offcanvas">Magnética</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Elegante"); }} data-bs-dismiss="offcanvas">Elegante</a></li>
-                </ul>
-              </li>
-
-              {/* PERSONALIZADO */}
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  PERSONALIZADO
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="personalizadoDropdown">
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Formula 1"); }} data-bs-dismiss="offcanvas">Formula 1</a></li>
-                  <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Transparente"); }} data-bs-dismiss="offcanvas">Transparente</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Menú horizontal para pantallas grandes */}
-        <div className="navbar-center-menu d-none d-lg-flex">
+        {/* Menú horizontal */}
+        <div className="navbar-center-menu d-flex">
           <ul className="navbar-nav">
             {/* MODELO */}
             <li className="nav-item dropdown">

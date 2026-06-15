@@ -69,7 +69,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
         <form className="d-flex flex-column flex-sm-row justify-content-center">
           <input
             type="email"
-            className="form-control me-sm-2 mb-2 mb-sm-0"
+            className="form-control me-sm-2 mb-2 mb-sm-0 w-100 w-sm-auto"
             placeholder="TU EMAIL:"
           />
           <button type="submit" className="btn btn-warning px-4 align-self-center align-self-sm-auto">

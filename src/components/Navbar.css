@@ -36,25 +36,23 @@
   color: #000;
 }
 
-/* Navbar toggler a la izquierda */
-.navbar-toggler {
-  order: 1;
-  margin-left: 0 !important;
-  margin-right: auto !important;
-}
 
-.navbar-brand {
-  order: 2;
-}
+/* Desktop: logo izquierda | menú centro | botones derecha */
+@media (min-width: 992px) {
+  .navbar-brand {
+    flex-shrink: 0;
+  }
 
-.navbar-buttons {
-  order: 3;
-  margin-left: auto !important;
-  margin-right: 0 !important;
-}
+  .navbar-center-menu {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
 
-.collapse {
-  order: 4;
+  .navbar-buttons {
+    flex-shrink: 0;
+    margin-left: auto;
+  }
 }
 
 /* Responsive: botones alineados en móviles */
@@ -66,11 +64,15 @@
   }
 
   .navbar-toggler {
+    order: 1;
     padding: 0.25rem 0.5rem;
     flex-shrink: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   .navbar-brand {
+    order: 2;
     flex: 1;
     text-align: center;
     margin: 0 !important;
@@ -86,6 +88,7 @@
   }
 
   .navbar-buttons {
+    order: 3;
     width: auto;
     gap: 0.25rem;
     flex-shrink: 0;
@@ -100,12 +103,6 @@
 
   .navbar .btn span {
     display: none;
-  }
-
-  .navbar .collapse {
-    order: 10;
-    width: 100%;
-    margin-top: 0.5rem;
   }
 }
 

@@ -120,8 +120,8 @@ function Navbar({ onSearch, suggestions }) {
         </div>
 
         {/* Menú horizontal para pantallas grandes */}
-        <div className="navbar-collapse d-none d-lg-flex ms-auto">
-          <ul className="navbar-nav mx-auto">
+        <div className="navbar-center-menu d-none d-lg-flex">
+          <ul className="navbar-nav">
             {/* MODELO */}
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">

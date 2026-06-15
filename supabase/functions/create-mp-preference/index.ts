@@ -31,12 +31,6 @@ serve(async (req) => {
         email: customer.email,
         address: { street_name: customer.address },
       },
-      back_urls: {
-        success: `${req.headers.get("origin") ?? ""}/checkout?status=success`,
-        failure: `${req.headers.get("origin") ?? ""}/checkout?status=failure`,
-        pending: `${req.headers.get("origin") ?? ""}/checkout?status=pending`,
-      },
-      auto_return: "approved",
     };
 
     const response = await fetch("https://api.mercadopago.com/checkout/preferences", {
@@ -49,9 +43,10 @@ serve(async (req) => {
     });
 
     const preference = await response.json();
+    console.log("Respuesta MP:", JSON.stringify(preference));
 
     if (!preference.id) {
-      throw new Error(preference.message ?? "Error creando preferencia");
+      throw new Error(JSON.stringify(preference));
     }
 
     return new Response(
@@ -59,6 +54,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
+    console.error("ERROR en create-mp-preference:", error.message);
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }

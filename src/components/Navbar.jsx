@@ -84,6 +84,17 @@ function Navbar({ onSearch, suggestions }) {
                 <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Transparente"); }}>Transparente</a></li>
               </ul>
             </li>
+
+            {/* MI CUENTA */}
+            <li className="nav-item">
+              <button
+                className="nav-link fw-semibold"
+                style={{ border: "none", background: "none", cursor: "pointer" }}
+                onClick={() => setShowAccountModal(true)}
+              >
+                <i className="bi bi-person-circle me-1"></i>Mi Cuenta
+              </button>
+            </li>
           </ul>
         </div>
 

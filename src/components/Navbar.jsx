@@ -102,7 +102,7 @@ function Navbar({ onSearch, suggestions }) {
 
         {/* Menú horizontal — solo desktop */}
         <div className="navbar-center-menu d-none d-lg-flex">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav flex-row">
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
               <ul className="dropdown-menu">

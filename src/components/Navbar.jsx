@@ -41,7 +41,7 @@ function Navbar({ onSearch, suggestions }) {
 
         {/* Botón hamburguesa */}
         <button
-          className="navbar-toggler ms-2"
+          className="navbar-toggler ms-2 d-lg-none"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#sidebarMenu"

@@ -32,7 +32,7 @@ function Navbar({ onSearch, suggestions }) {
 
   return (
     <>
-      <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 fixed-top d-flex align-items-center" style={{position: "relative"}}>
+      <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 d-flex align-items-center">
 
         {/* Hamburger — solo mobile */}
         <button

@@ -16,6 +16,11 @@
   }
 }
 
+.navbar {
+  position: relative !important;
+  top: auto !important;
+}
+
 /* Estilo general del menú */
 .navbar .nav-link {
   font-weight: 600;

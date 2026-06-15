@@ -106,12 +106,35 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
         <strong className="text-white">FullCase</strong>
         <br />
         <br />
-        <div className="d-flex justify-content-center flex-wrap payment-logos mt-3">
-          <img src="/images/visa.png" alt="Visa" className="mx-2 mb-2"/>
-          <img src="/images/mastercard.png" alt="Mastercard" className="mx-2 mb-2"/>
-          <img src="/images/oca.png" alt="OCA" className="mx-2 mb-2"/>
-          <img src="/images/paypal.png" alt="MercadoPago" className="mx-2 mb-2"/>
-          <img src="/images/paypal.png" alt="Scotiabank" className="mx-2 mb-2"/>
+        <div className="d-flex justify-content-center flex-wrap align-items-center gap-3 mt-3">
+          {/* Visa */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="38" viewBox="0 0 60 38" role="img" aria-label="Visa">
+            <rect width="60" height="38" rx="5" fill="#1A1F71"/>
+            <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="16" fontWeight="bold" fontFamily="Arial, sans-serif" fontStyle="italic">VISA</text>
+          </svg>
+          {/* Mastercard */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="38" viewBox="0 0 60 38" role="img" aria-label="Mastercard">
+            <rect width="60" height="38" rx="5" fill="#252525"/>
+            <circle cx="23" cy="19" r="11" fill="#EB001B"/>
+            <circle cx="37" cy="19" r="11" fill="#F79E1B"/>
+            <path d="M30 10.5a11 11 0 0 1 0 17A11 11 0 0 1 30 10.5z" fill="#FF5F00"/>
+          </svg>
+          {/* OCA */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="38" viewBox="0 0 60 38" role="img" aria-label="OCA">
+            <rect width="60" height="38" rx="5" fill="#003087"/>
+            <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="15" fontWeight="bold" fontFamily="Arial, sans-serif">OCA</text>
+          </svg>
+          {/* MercadoPago */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="38" viewBox="0 0 60 38" role="img" aria-label="MercadoPago">
+            <rect width="60" height="38" rx="5" fill="#00B1EA"/>
+            <text x="50%" y="42%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold" fontFamily="Arial, sans-serif">MERCADO</text>
+            <text x="50%" y="68%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold" fontFamily="Arial, sans-serif">PAGO</text>
+          </svg>
+          {/* Abitab */}
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="38" viewBox="0 0 60 38" role="img" aria-label="Abitab">
+            <rect width="60" height="38" rx="5" fill="#E8000D"/>
+            <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">ABITAB</text>
+          </svg>
         </div>
       </div>
     </div>

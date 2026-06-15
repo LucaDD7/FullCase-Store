@@ -32,7 +32,7 @@ function Navbar({ onSearch, suggestions }) {
 
   return (
     <>
-      <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 d-flex align-items-center">
+      <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 d-flex align-items-center sticky-top">
 
         {/* Hamburger — solo mobile */}
         <button

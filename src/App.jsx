@@ -19,9 +19,6 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {location.pathname !== "/cart" && (
         <Navbar onSearch={setSearchTerm} suggestions={suggestions} />
       )}
-      <br />
-      <br />
-
       {/* Carrusel solo si NO estamos en /cart o /checkout */}
       {location.pathname !== "/cart" && location.pathname !== "/checkout" && (
         <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" >

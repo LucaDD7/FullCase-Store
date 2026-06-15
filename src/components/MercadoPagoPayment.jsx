@@ -29,7 +29,9 @@ function MercadoPagoPayment({ cartTotal, cart, customer, onSuccess, onError }) {
       if (cancelled) return;
 
       if (fnError || !data?.preferenceId) {
-        setError("No se pudo iniciar el pago. Verificá tu conexión e intentá de nuevo.");
+        const detail = fnError?.message || data?.error || "sin detalles";
+        console.error("create-mp-preference falló:", { fnError, data });
+        setError(`Error al crear preferencia: ${detail}`);
         onError("Error al crear preferencia de pago");
         return;
       }

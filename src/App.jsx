@@ -72,7 +72,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
             className="form-control me-sm-2 mb-2 mb-sm-0"
             placeholder="TU EMAIL:"
           />
-          <button type="submit" className="btn btn-warning w-150 w-sm-auto">
+          <button type="submit" className="btn btn-warning px-4 align-self-center align-self-sm-auto">
             Enviar
           </button>
         </form>

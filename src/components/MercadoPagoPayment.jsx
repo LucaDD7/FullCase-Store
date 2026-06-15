@@ -2,92 +2,89 @@ import { useEffect, useRef, useState } from "react";
 import "./MercadoPagoPayment.css";
 
 function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
-  const [mp, setMp] = useState(null);
+  const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState("");
-  const formRef = useRef(null);
+  const cardFormRef = useRef(null);
 
   useEffect(() => {
-    const initMercadoPago = async () => {
-      try {
-        const script = document.createElement("script");
-        script.src = "https://sdk.mercadopago.com/js/v2";
-        script.async = true;
-        script.onload = () => {
-          if (window.MercadoPago) {
-            const mercadopago = new window.MercadoPago(
-              import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY
-            );
-            setMp(mercadopago);
-            createCardToken(mercadopago);
-          }
-        };
-        script.onerror = () => {
-          setError("Error cargando Mercado Pago");
-          onError("Error cargando Mercado Pago");
-        };
-        document.body.appendChild(script);
-      } catch (err) {
-        setError(err.message);
-        onError(err.message);
-      }
-    };
+    let mounted = true;
 
-    initMercadoPago();
-  }, [onError]);
+    const initMercadoPago = () => {
+      if (!window.MercadoPago) return;
 
-  const createCardToken = (mercadopago) => {
-    setTimeout(() => {
-      mercadopago.cardToken.create({
+      const mp = new window.MercadoPago(import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY);
+
+      const cardForm = mp.cardForm({
         amount: cartTotal.toString(),
         autoMount: true,
         form: {
           id: "form-checkout",
-          cardholderName: {
-            id: "form-checkout_cardholderName",
+          cardholderName: { id: "form-checkout_cardholderName" },
+          cardholderEmail: { id: "form-checkout_cardholderEmail" },
+          cardNumber: { id: "form-checkout_cardNumber", placeholder: "1234 5678 9012 3456" },
+          expirationDate: { id: "form-checkout_expirationDate", placeholder: "MM/YY" },
+          securityCode: { id: "form-checkout_securityCode", placeholder: "CVV" },
+          installments: { id: "form-checkout_installments" },
+          identificationType: { id: "form-checkout_identificationType" },
+          identificationNumber: { id: "form-checkout_identificationNumber" },
+          issuer: { id: "form-checkout_issuer" },
+        },
+        callbacks: {
+          onFormMounted: (err) => {
+            if (!mounted) return;
+            if (err) {
+              console.warn("Error montando el formulario:", err);
+            } else {
+              setIsReady(true);
+            }
           },
-          cardholderEmail: {
-            id: "form-checkout_cardholderEmail",
+          onSubmit: (event) => {
+            event.preventDefault();
+            const { token } = cardForm.getCardFormData();
+            if (token) {
+              onSuccess(token);
+            } else {
+              setError("No se pudo obtener el token de pago. Verificá los datos.");
+              onError("Error al obtener token de pago");
+            }
           },
-          cardNumber: {
-            id: "form-checkout_cardNumber",
-          },
-          cardExpirationMonth: {
-            id: "form-checkout_cardExpirationMonth",
-          },
-          cardExpirationYear: {
-            id: "form-checkout_cardExpirationYear",
-          },
-          cardSecurityCode: {
-            id: "form-checkout_securityCode",
+          onError: (errors) => {
+            if (!mounted) return;
+            const msg = errors.map((e) => e.message).join(", ");
+            setError(msg);
           },
         },
       });
-    }, 100);
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!mp) {
-      setError("Mercado Pago no está cargado");
-      return;
+      cardFormRef.current = cardForm;
+    };
+
+    if (window.MercadoPago) {
+      initMercadoPago();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://sdk.mercadopago.com/js/v2";
+      script.async = true;
+      script.onload = initMercadoPago;
+      script.onerror = () => {
+        if (!mounted) return;
+        setError("Error cargando Mercado Pago");
+        onError("Error cargando Mercado Pago");
+      };
+      document.body.appendChild(script);
     }
 
-    try {
-      const token = await mp.cardToken.create();
-      if (token.id) {
-        onSuccess(token.id);
-      } else {
-        setError("Error creando el token de pago");
-        onError("Error creando el token de pago");
+    return () => {
+      mounted = false;
+      if (cardFormRef.current) {
+        cardFormRef.current.unmount();
+        cardFormRef.current = null;
       }
-    } catch (err) {
-      setError(err.message || "Error procesando el pago");
-      onError(err.message || "Error procesando el pago");
-    }
-  };
+    };
+  }, []);
 
   return (
-    <form id="form-checkout" onSubmit={handleSubmit} ref={formRef}>
+    <form id="form-checkout">
       <div className="mp-container">
 
         <div className="mb-3">
@@ -115,64 +112,50 @@ function MercadoPagoPayment({ cartTotal, onSuccess, onError, loading }) {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="form-checkout_cardNumber" className="form-label">
-            Número de tarjeta
-          </label>
-          <input
-            id="form-checkout_cardNumber"
-            type="text"
-            className="form-control"
-            placeholder="1234 5678 9012 3456"
-            maxLength="19"
-          />
+          <label className="form-label">Número de tarjeta</label>
+          <div id="form-checkout_cardNumber" className="form-control mp-iframe-field" />
         </div>
 
         <div className="row">
           <div className="col-md-6 mb-3">
-            <label htmlFor="form-checkout_cardExpirationMonth" className="form-label">
-              Mes
-            </label>
-            <input
-              id="form-checkout_cardExpirationMonth"
-              type="text"
-              className="form-control"
-              placeholder="MM"
-              maxLength="2"
-            />
+            <label className="form-label">Vencimiento</label>
+            <div id="form-checkout_expirationDate" className="form-control mp-iframe-field" />
           </div>
           <div className="col-md-6 mb-3">
-            <label htmlFor="form-checkout_cardExpirationYear" className="form-label">
-              Año
-            </label>
-            <input
-              id="form-checkout_cardExpirationYear"
-              type="text"
-              className="form-control"
-              placeholder="YYYY"
-              maxLength="4"
-            />
+            <label className="form-label">CVV</label>
+            <div id="form-checkout_securityCode" className="form-control mp-iframe-field" />
           </div>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="form-checkout_securityCode" className="form-label">
-            CVV
+          <label htmlFor="form-checkout_identificationType" className="form-label">
+            Tipo de documento
+          </label>
+          <select id="form-checkout_identificationType" className="form-select" />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="form-checkout_identificationNumber" className="form-label">
+            Número de documento
           </label>
           <input
-            id="form-checkout_securityCode"
+            id="form-checkout_identificationNumber"
             type="text"
             className="form-control"
-            placeholder="123"
-            maxLength="4"
+            placeholder="Número de documento"
           />
         </div>
+
+        {/* Campos ocultos requeridos por el SDK */}
+        <select id="form-checkout_issuer" style={{ display: "none" }} />
+        <select id="form-checkout_installments" style={{ display: "none" }} />
 
         {error && <div className="alert alert-danger mb-3">{error}</div>}
 
         <button
           type="submit"
           className="btn btn-success w-100"
-          disabled={loading || !mp}
+          disabled={loading || !isReady}
         >
           {loading ? "Procesando..." : `Pagar $${cartTotal.toLocaleString()}`}
         </button>

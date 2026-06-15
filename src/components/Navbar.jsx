@@ -85,21 +85,17 @@ function Navbar({ onSearch, suggestions }) {
               </ul>
             </li>
 
-            {/* MI CUENTA */}
-            <li className="nav-item">
-              <button
-                className="nav-link fw-semibold"
-                style={{ border: "none", background: "none", cursor: "pointer" }}
-                onClick={() => setShowAccountModal(true)}
-              >
-                <i className="bi bi-person-circle me-1"></i>Mi Cuenta
-              </button>
-            </li>
           </ul>
         </div>
 
         <div className="navbar-buttons d-flex align-items-center">
-          {/* Botón lupa con texto */}
+          {/* Botón Mi Cuenta */}
+          <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowAccountModal(true)}>
+            <i className="bi bi-person-circle me-2"></i>
+            <span>Mi cuenta</span>
+          </button>
+
+          {/* Botón Buscar */}
           <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowModal(true)}>
             <i className="bi bi-search me-2"></i>
             <span>Buscar</span>

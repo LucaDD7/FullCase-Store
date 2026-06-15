@@ -32,73 +32,116 @@ function Navbar({ onSearch, suggestions }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white px-5 py-0 fixed-top d-flex align-items-center">
+      <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 fixed-top d-flex align-items-center">
+
+        {/* Hamburger — solo mobile */}
+        <button
+          className="navbar-toggler d-lg-none me-2"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Sidebar offcanvas — mobile */}
+        <div className="offcanvas offcanvas-start text-bg-dark" tabIndex="-1" id="sidebarMenu">
+          <div className="offcanvas-header border-bottom border-secondary">
+            <button
+              className="btn text-white d-flex align-items-center gap-2 p-0"
+              onClick={() => setShowAccountModal(true)}
+              data-bs-dismiss="offcanvas"
+            >
+              <i className="bi bi-person-circle fs-5"></i>
+              <span className="fw-semibold">Mi cuenta</span>
+            </button>
+            <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+          </div>
+          <div className="offcanvas-body p-0">
+            <ul className="navbar-nav">
+              <li className="nav-item dropdown border-bottom border-secondary">
+                <a className="nav-link dropdown-toggle text-white fw-bold px-4 py-3" href="#" data-bs-toggle="dropdown">
+                  MODELO
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
+                  {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
+                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                  ))}
+                </ul>
+              </li>
+              <li className="nav-item dropdown border-bottom border-secondary">
+                <a className="nav-link dropdown-toggle text-white fw-bold px-4 py-3" href="#" data-bs-toggle="dropdown">
+                  CUERO
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
+                  {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
+                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                  ))}
+                </ul>
+              </li>
+              <li className="nav-item dropdown border-bottom border-secondary">
+                <a className="nav-link dropdown-toggle text-white fw-bold px-4 py-3" href="#" data-bs-toggle="dropdown">
+                  PERSONALIZADO
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
+                  {["Formula 1","Transparente"].map((m) => (
+                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         {/* Logo */}
-        <Link to="/" className="navbar-brand d-flex align-items-center" onClick={handleLogoClick}>
-  <img src="/images/FullCase_img-removebg-preview.png" height="70" className="me-2" />
-  <span className="brand-text">FullCase</span>
-</Link>
+        <Link to="/" className="navbar-brand d-flex align-items-center mx-auto mx-lg-0" onClick={handleLogoClick}>
+          <img src="/images/FullCase_img-removebg-preview.png" height="70" className="me-2" />
+          <span className="brand-text">FullCase</span>
+        </Link>
 
-
-        {/* Menú horizontal */}
-        <div className="navbar-center-menu d-flex">
+        {/* Menú horizontal — solo desktop */}
+        <div className="navbar-center-menu d-none d-lg-flex">
           <ul className="navbar-nav">
-            {/* MODELO */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                MODELO
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="modeloDropdownLg">
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 11 pro"); }}>Iphone 11 pro</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13"); }}>Iphone 13</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 13 pro"); }}>Iphone 13 pro</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14"); }}>Iphone 14</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 14 pro"); }}>Iphone 14 pro</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15"); }}>Iphone 15</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 15 pro"); }}>Iphone 15 pro</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 16"); }}>Iphone 16</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Iphone 17"); }}>Iphone 17</a></li>
+              <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
+              <ul className="dropdown-menu">
+                {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
+                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                ))}
               </ul>
             </li>
-
-            {/* CUERO */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="cueroDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                CUERO
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="cueroDropdownLg">
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Tarjetero"); }}>Tarjetero</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Premium"); }}>Premium</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Magnética"); }}>Magnética</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Elegante"); }}>Elegante</a></li>
+              <a className="nav-link dropdown-toggle" href="#" id="cueroDropdownLg" role="button" data-bs-toggle="dropdown">CUERO</a>
+              <ul className="dropdown-menu">
+                {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
+                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                ))}
               </ul>
             </li>
-
-            {/* PERSONALIZADO */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdownLg" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                PERSONALIZADO
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="personalizadoDropdownLg">
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Formula 1"); }}>Formula 1</a></li>
-                <li><a className="dropdown-item" href="#" onClick={(e) => {e.preventDefault(); onSearch("Transparente"); }}>Transparente</a></li>
+              <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdownLg" role="button" data-bs-toggle="dropdown">PERSONALIZADO</a>
+              <ul className="dropdown-menu">
+                {["Formula 1","Transparente"].map((m) => (
+                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                ))}
               </ul>
             </li>
-
           </ul>
         </div>
 
-        <div className="navbar-buttons d-flex align-items-center">
-          {/* Botón Mi Cuenta */}
-          <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowAccountModal(true)}>
+        {/* Botones */}
+        <div className="navbar-buttons d-flex align-items-center ms-auto ms-lg-0">
+          {/* Mi Cuenta — solo desktop */}
+          <button className="btn btn-dark me-2 d-none d-lg-flex align-items-center" onClick={() => setShowAccountModal(true)}>
             <i className="bi bi-person-circle me-2"></i>
             <span>Mi cuenta</span>
           </button>
 
-          {/* Botón Buscar */}
+          {/* Buscar */}
           <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowModal(true)}>
-            <i className="bi bi-search me-2"></i>
-            <span>Buscar</span>
+            <i className="bi bi-search"></i>
+            <span className="d-none d-lg-inline ms-2">Buscar</span>
           </button>
 
             {/* Botón carrito */}

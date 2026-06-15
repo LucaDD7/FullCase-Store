@@ -61,10 +61,10 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {location.pathname !== "/cart" && (
         <>
         <footer className="footer-top bg-secondary text-white py-5">
-  <div className="container px-0 px-sm-3">
-    <div className="row justify-content-center text-center g-0 g-sm-3">
+  <div className="container-fluid px-0 px-sm-4">
+    <div className="row justify-content-center text-center g-0">
       {/* Suscripción */}
-      <div className="col-12 col-md-8 mb-4 px-0 px-md-3">
+      <div className="col-12 col-sm-8 col-md-6 mb-4 px-0 px-sm-3">
         <h5 className="mb-3">Suscribite aquí:</h5>
         <form className="d-flex flex-column flex-sm-row justify-content-center">
           <input

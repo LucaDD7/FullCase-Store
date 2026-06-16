@@ -5,10 +5,12 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Catalog from "./pages/Catalog";
 import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 
 function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
   const location = useLocation();
@@ -54,6 +56,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/mis-pedidos" element={<Orders />} />
         </Routes>
       </main>
 
@@ -155,6 +158,7 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
 
   return (
+    <AuthProvider>
     <CartProvider>
       <Router>
         <Layout
@@ -165,6 +169,7 @@ function App() {
         />
       </Router>
     </CartProvider>
+    </AuthProvider>
   );
 }
 

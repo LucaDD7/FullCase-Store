@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import { supabase } from "../supabaseClient";
 import MercadoPagoPayment from "../components/MercadoPagoPayment";
 import "./Checkout.css";
@@ -8,9 +9,10 @@ import "./Checkout.css";
 function Checkout() {
   const navigate = useNavigate();
   const { cart, finalizePurchase } = useCart();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: user?.email ?? "",
     address: "",
   });
   const [loading, setLoading] = useState(false);
@@ -59,22 +61,43 @@ function Checkout() {
       return;
     }
 
-    const { error: supabaseError } = await supabase.from("orders").insert([
-      {
-        customer_name: formData.name,
-        customer_email: formData.email,
-        customer_address: formData.address,
+    // 1. Crear la orden
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .insert([{
+        user_id: user?.id ?? null,
+        status: "completed",
+        name: formData.name,
+        email: formData.email,
+        address: formData.address,
         total: cartTotal,
-        items: cart,
         payment_id: paymentIntentId,
-        payment_status: "completed",
-      },
-    ]);
+      }])
+      .select()
+      .single();
+
+    if (orderError) {
+      setError("Hubo un problema al procesar tu compra. Intenta de nuevo.");
+      setLoading(false);
+      return;
+    }
+
+    // 2. Insertar los items (order_id = customer_name, que es la PK de orders)
+    const orderItems = cart.map(item => ({
+      order_id: order.customer_name,
+      product_id: item.id,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    const { error: itemsError } = await supabase
+      .from("order_items")
+      .insert(orderItems);
 
     setLoading(false);
 
-    if (supabaseError) {
-      setError("Hubo un problema al procesar tu compra. Intenta de nuevo.");
+    if (itemsError) {
+      setError("Hubo un problema al guardar los productos. Intenta de nuevo.");
     } else {
       setSuccess(true);
       finalizePurchase();

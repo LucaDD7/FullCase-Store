@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Tab, Tabs } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import './Navbar.css';
 
 function Navbar({ onSearch, suggestions }) {
@@ -10,8 +11,11 @@ function Navbar({ onSearch, suggestions }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
+  const { user, signIn, signUp, signOut } = useAuth();
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -206,48 +210,82 @@ function Navbar({ onSearch, suggestions }) {
         </Modal.Body>
       </Modal>
 
-      {/* Modal de Registro */}
-      <Modal show={showAccountModal} onHide={() => setShowAccountModal(false)} centered>
+      {/* Modal Mi Cuenta */}
+      <Modal show={showAccountModal} onHide={() => { setShowAccountModal(false); setAuthError(""); }} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Crear Cuenta</Modal.Title>
+          <Modal.Title>{user ? "Mi Cuenta" : "Acceder"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">Correo Electrónico</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+          {user ? (
+            <div className="text-center">
+              <p className="mb-1"><strong>{user.email}</strong></p>
+              <Link
+                to="/mis-pedidos"
+                className="btn btn-outline-primary w-100 mb-2"
+                onClick={() => setShowAccountModal(false)}
+              >
+                <i className="bi bi-bag me-2"></i>Mis Pedidos
+              </Link>
+              <button
+                className="btn btn-danger w-100"
+                onClick={async () => { await signOut(); setShowAccountModal(false); }}
+              >
+                Cerrar sesión
+              </button>
             </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <button
-              type="button"
-              className="btn btn-primary w-100"
-              onClick={() => {
-                alert(`Registro: ${email}`);
-                setEmail("");
-                setPassword("");
-                setShowAccountModal(false);
-              }}
-            >
-              Registrarse
-            </button>
-          </form>
+          ) : (
+            <>
+              {authError && <div className="alert alert-danger py-2">{authError}</div>}
+              <Tabs defaultActiveKey="login" className="mb-3" onSelect={() => setAuthError("")}>
+                <Tab eventKey="login" title="Ingresar">
+                  <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    setAuthLoading(true);
+                    setAuthError("");
+                    const { error } = await signIn(email, password);
+                    setAuthLoading(false);
+                    if (error) { setAuthError(error.message); }
+                    else { setShowAccountModal(false); setEmail(""); setPassword(""); }
+                  }}>
+                    <div className="mb-3">
+                      <label className="form-label">Email</label>
+                      <input type="email" className="form-control" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Contraseña</label>
+                      <input type="password" className="form-control" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100" disabled={authLoading}>
+                      {authLoading ? "Ingresando..." : "Ingresar"}
+                    </button>
+                  </form>
+                </Tab>
+                <Tab eventKey="register" title="Registrarse">
+                  <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    setAuthLoading(true);
+                    setAuthError("");
+                    const { error } = await signUp(email, password);
+                    setAuthLoading(false);
+                    if (error) { setAuthError(error.message); }
+                    else { setAuthError(""); setShowAccountModal(false); setEmail(""); setPassword(""); }
+                  }}>
+                    <div className="mb-3">
+                      <label className="form-label">Email</label>
+                      <input type="email" className="form-control" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label">Contraseña</label>
+                      <input type="password" className="form-control" placeholder="Mínimo 6 caracteres" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+                    </div>
+                    <button type="submit" className="btn btn-success w-100" disabled={authLoading}>
+                      {authLoading ? "Registrando..." : "Crear cuenta"}
+                    </button>
+                  </form>
+                </Tab>
+              </Tabs>
+            </>
+          )}
         </Modal.Body>
       </Modal>
     </>

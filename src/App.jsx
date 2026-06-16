@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { supabase } from "./supabaseClient";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
@@ -13,6 +14,22 @@ import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 
 function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
+  const [subEmail, setSubEmail] = useState("");
+  const [subStatus, setSubStatus] = useState(null);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!subEmail.trim()) return;
+    const { error } = await supabase.from("subscribers").insert([{ email: subEmail.trim() }]);
+    if (error?.code === "23505") {
+      setSubStatus("ya_suscripto");
+    } else if (error) {
+      setSubStatus("error");
+    } else {
+      setSubStatus("ok");
+      setSubEmail("");
+    }
+  };
   const location = useLocation();
 
   return (
@@ -69,17 +86,23 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {/* Suscripción */}
       <div className="col-12 col-sm-8 col-md-6 mb-4 px-0 px-sm-3">
         <h5 className="mb-3">Suscribite aquí:</h5>
-        <form className="mx-auto" style={{ maxWidth: '480px' }}>
+        <form className="mx-auto" style={{ maxWidth: '480px' }} onSubmit={handleSubscribe}>
           <div className="input-group">
             <input
               type="email"
               className="form-control"
               placeholder="TU EMAIL:"
+              value={subEmail}
+              onChange={(e) => { setSubEmail(e.target.value); setSubStatus(null); }}
+              required
             />
             <button type="submit" className="btn btn-warning fw-bold px-4">
               ENVIAR
             </button>
           </div>
+          {subStatus === "ok" && <p className="text-success mt-2 mb-0" style={{ fontSize: '0.85rem' }}>¡Gracias por suscribirte!</p>}
+          {subStatus === "ya_suscripto" && <p className="text-warning mt-2 mb-0" style={{ fontSize: '0.85rem' }}>Este email ya está suscripto.</p>}
+          {subStatus === "error" && <p className="text-danger mt-2 mb-0" style={{ fontSize: '0.85rem' }}>Hubo un error, intentá de nuevo.</p>}
         </form>
       </div>
 
@@ -90,7 +113,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
           <a href="https://www.instagram.com/full.caseuy/" target="_blank" rel="noopener noreferrer" className="me-3 fs-4 text-white">
             <i className="bi bi-instagram"></i>
           </a>
-          <a href="https://wa.me/598XXXXXXXX" target="_blank" rel="noopener noreferrer" className="fs-4 text-white">
+          <a href="https://wa.me/59891902046" target="_blank" rel="noopener noreferrer" className="fs-4 text-white">
             <i className="bi bi-whatsapp"></i>
           </a>
         </div>

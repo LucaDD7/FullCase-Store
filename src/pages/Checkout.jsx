@@ -9,9 +9,9 @@ import "./Checkout.css";
 function Checkout() {
   const navigate = useNavigate();
   const { cart, finalizePurchase } = useCart();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [formData, setFormData] = useState({
-    name: "",
+    name: profile?.full_name ?? "",
     email: user?.email ?? "",
     address: "",
   });

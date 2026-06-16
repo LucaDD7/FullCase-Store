@@ -11,11 +11,12 @@ function Navbar({ onSearch, suggestions }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
-  const { user, signIn, signUp, signOut } = useAuth();
+  const { user, profile, signIn, signUp, signOut } = useAuth();
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -218,7 +219,8 @@ function Navbar({ onSearch, suggestions }) {
         <Modal.Body>
           {user ? (
             <div className="text-center">
-              <p className="mb-1"><strong>{user.email}</strong></p>
+              {profile?.full_name && <p className="mb-0 fw-bold">{profile.full_name}</p>}
+              <p className="mb-2 text-muted" style={{ fontSize: '0.9rem' }}>{user.email}</p>
               <Link
                 to="/mis-pedidos"
                 className="btn btn-outline-primary w-100 mb-2"
@@ -265,11 +267,15 @@ function Navbar({ onSearch, suggestions }) {
                     e.preventDefault();
                     setAuthLoading(true);
                     setAuthError("");
-                    const { error } = await signUp(email, password);
+                    const { error } = await signUp(email, password, fullName);
                     setAuthLoading(false);
                     if (error) { setAuthError(error.message); }
-                    else { setAuthError(""); setShowAccountModal(false); setEmail(""); setPassword(""); }
+                    else { setShowAccountModal(false); setEmail(""); setPassword(""); setFullName(""); }
                   }}>
+                    <div className="mb-3">
+                      <label className="form-label">Nombre</label>
+                      <input type="text" className="form-control" placeholder="Tu nombre" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                    </div>
                     <div className="mb-3">
                       <label className="form-label">Email</label>
                       <input type="email" className="form-control" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} required />

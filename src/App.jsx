@@ -69,7 +69,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
       {/* Suscripción */}
       <div className="col-12 col-sm-8 col-md-6 mb-4 px-0 px-sm-3">
         <h5 className="mb-3">Suscribite aquí:</h5>
-        <form>
+        <form className="mx-auto" style={{ maxWidth: '480px' }}>
           <div className="input-group">
             <input
               type="email"

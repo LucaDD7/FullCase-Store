@@ -4,19 +4,20 @@ import { useCart } from '../context/CartContext';
 
 function Catalog({ searchTerm, setSuggestions }) {
   const [products, setProducts] = useState([]);
-  const { cart, addToCart } = useCart();
+  const { cart, cartVersion, addToCart } = useCart();
+
+  const fetchProducts = async () => {
+    const { data, error } = await supabase.from('products').select('*');
+    if (error) {
+      console.error("Error al traer productos:", error);
+    } else {
+      setProducts(data);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data, error } = await supabase.from('products').select('*');
-      if (error) {
-        console.error("Error al traer productos:", error);
-      } else {
-        setProducts(data);
-      }
-    };
     fetchProducts();
-  }, []);
+  }, [cartVersion]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -44,8 +45,9 @@ function Catalog({ searchTerm, setSuggestions }) {
   return (
     <div className="row">
       {filteredProducts.map((product) => {
-        const inCart = cart.some((p) => p.id === product.id);
-        const noStock = product.stock <= 0 || inCart;
+        const cartItem = cart.find((p) => p.id === product.id);
+        const quantityInCart = cartItem?.quantity ?? 0;
+        const noStock = product.stock <= 0;
 
         return (
           <div className="col-6 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
@@ -63,6 +65,9 @@ function Catalog({ searchTerm, setSuggestions }) {
                 <p className="card-text"><strong>Modelo:</strong> {product.model}</p>
                 <p className="card-text fw-bold">${product.price}</p>
                 <p className="card-text">Stock: {product.stock}</p>
+                {quantityInCart > 0 && (
+                  <p className="card-text text-primary">En carrito: {quantityInCart}</p>
+                )}
                 <button
                   className="btn btn-primary mt-auto"
                   onClick={() => addToCart(product)}

@@ -12,9 +12,8 @@ function Navbar({ onSearch, suggestions }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
-  const cartCount = cart.length;
-
-  const cartTotal = cart.reduce((acc, item) => acc + item.price, 0);
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
 
 

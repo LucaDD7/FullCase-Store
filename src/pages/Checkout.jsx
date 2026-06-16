@@ -7,7 +7,7 @@ import "./Checkout.css";
 
 function Checkout() {
   const navigate = useNavigate();
-  const { cart, clearCart } = useCart();
+  const { cart, finalizePurchase } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,7 +18,7 @@ function Checkout() {
   const [error, setError] = useState("");
   const [showPayment, setShowPayment] = useState(false);
 
-  const cartTotal = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
+  const cartTotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   const validateForm = () => {
     if (!formData.name.trim()) {
@@ -77,7 +77,7 @@ function Checkout() {
       setError("Hubo un problema al procesar tu compra. Intenta de nuevo.");
     } else {
       setSuccess(true);
-      clearCart();
+      finalizePurchase();
     }
   };
 

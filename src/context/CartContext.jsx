@@ -9,22 +9,13 @@ export function CartProvider({ children }) {
 
   const bumpVersion = () => setCartVersion(v => v + 1);
 
-  const addToCart = async (product) => {
+  const addToCart = (product) => {
     if (product.stock <= 0) return;
-
-    const { error } = await supabase
-      .from('products')
-      .update({ stock: product.stock - 1 })
-      .eq('id', product.id);
-
-    if (error) {
-      console.error("Error al actualizar stock:", error);
-      return;
-    }
 
     setCart(prev => {
       const existing = prev.find(p => p.id === product.id);
       if (existing) {
+        if (existing.quantity >= product.stock) return prev;
         return prev.map(p => p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p);
       }
       return [...prev, { ...product, quantity: 1 }];
@@ -33,43 +24,19 @@ export function CartProvider({ children }) {
   };
 
   const incrementQuantity = async (id) => {
-    const { data, error: fetchError } = await supabase
-      .from('products')
-      .select('stock')
-      .eq('id', id)
-      .single();
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
 
-    if (fetchError || !data || data.stock <= 0) return;
-
-    const { error } = await supabase
-      .from('products')
-      .update({ stock: data.stock - 1 })
-      .eq('id', id);
-
-    if (error) { console.error("Error al incrementar cantidad:", error); return; }
+    const { data } = await supabase.from('products').select('stock').eq('id', id).single();
+    if (!data || item.quantity >= data.stock) return;
 
     setCart(prev => prev.map(p => p.id === id ? { ...p, quantity: p.quantity + 1 } : p));
     bumpVersion();
   };
 
-  const decrementQuantity = async (id) => {
+  const decrementQuantity = (id) => {
     const item = cart.find(p => p.id === id);
     if (!item) return;
-
-    const { data, error: fetchError } = await supabase
-      .from('products')
-      .select('stock')
-      .eq('id', id)
-      .single();
-
-    if (fetchError) { console.error("Error al obtener stock:", fetchError); return; }
-
-    const { error } = await supabase
-      .from('products')
-      .update({ stock: (data?.stock ?? 0) + 1 })
-      .eq('id', id);
-
-    if (error) { console.error("Error al devolver stock:", error); return; }
 
     setCart(prev => {
       if (item.quantity > 1) {
@@ -80,42 +47,24 @@ export function CartProvider({ children }) {
     bumpVersion();
   };
 
-  const removeFromCart = async (id) => {
-    const item = cart.find(p => p.id === id);
-    if (!item) return;
-
-    const { data, error: fetchError } = await supabase
-      .from('products')
-      .select('stock')
-      .eq('id', id)
-      .single();
-
-    if (fetchError) { console.error("Error al obtener stock:", fetchError); return; }
-
-    const { error } = await supabase
-      .from('products')
-      .update({ stock: (data?.stock ?? 0) + item.quantity })
-      .eq('id', id);
-
-    if (error) { console.error("Error al devolver stock:", error); return; }
-
+  const removeFromCart = (id) => {
     setCart(prev => prev.filter(p => p.id !== id));
     bumpVersion();
   };
 
-  const clearCart = async () => {
-    for (const item of cart) {
-      const { data } = await supabase.from('products').select('stock').eq('id', item.id).single();
-      await supabase
-        .from('products')
-        .update({ stock: (data?.stock ?? 0) + item.quantity })
-        .eq('id', item.id);
-    }
+  const clearCart = () => {
     setCart([]);
     bumpVersion();
   };
 
-  const finalizePurchase = () => {
+  const finalizePurchase = async () => {
+    for (const item of cart) {
+      const { data } = await supabase.from('products').select('stock').eq('id', item.id).single();
+      await supabase
+        .from('products')
+        .update({ stock: Math.max(0, (data?.stock ?? 0) - item.quantity) })
+        .eq('id', item.id);
+    }
     setCart([]);
     bumpVersion();
   };

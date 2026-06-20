@@ -47,7 +47,7 @@ function Catalog({ searchTerm, setSuggestions }) {
       {filteredProducts.map((product) => {
         const cartItem = cart.find((p) => p.id === product.id);
         const quantityInCart = cartItem?.quantity ?? 0;
-        const noStock = product.stock <= 0;
+        const noStock = product.stock <= 0 || quantityInCart >= product.stock;
 
         return (
           <div className="col-6 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>

@@ -41,15 +41,15 @@ function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, sugges
       )}
       {/* Carrusel solo si NO estamos en /cart o /checkout */}
       {!["/cart", "/checkout", "/mis-pedidos", "/mi-cuenta"].includes(location.pathname) && !searchTerm && (
-        <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" >
-          <div className="carousel-inner" >
-            <div className="carousel-item active">
+        <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true" data-bs-pause="false">
+          <div className="carousel-inner">
+            <div className="carousel-item active" data-bs-interval="3000">
               <img src="/images/Fondo1.png" className="d-block w-100" alt="Banner 1" />
             </div>
-            <div className="carousel-item">
+            <div className="carousel-item" data-bs-interval="3000">
               <img src="/images/Fondo2.png" className="d-block w-100" alt="Banner 2" />
             </div>
-            <div className="carousel-item">
+            <div className="carousel-item" data-bs-interval="3000">
               <img src="/images/Fondo3.png" className="d-block w-100" alt="Banner 3" />
             </div>
           </div>

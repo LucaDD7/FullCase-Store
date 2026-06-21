@@ -40,15 +40,15 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
     <>
       <nav className="navbar navbar-light bg-white px-3 px-lg-5 py-0 d-flex align-items-center sticky-top">
 
-        {/* Hamburger — solo mobile */}
+        {/* Tres puntos — solo mobile */}
         <button
-          className="navbar-toggler d-lg-none me-2"
+          className="btn btn-dark d-lg-none me-2"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#sidebarMenu"
           aria-controls="sidebarMenu"
         >
-          <span className="navbar-toggler-icon"></span>
+          <i className="bi bi-three-dots-vertical"></i>
         </button>
 
         {/* Sidebar offcanvas — mobile */}
@@ -60,7 +60,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
               data-bs-dismiss="offcanvas"
             >
               <i className="bi bi-person-circle fs-5"></i>
-              <span className="fw-semibold">Mi cuenta</span>
+              <span className="fw-semibold">{user?.user_metadata?.full_name || profile?.full_name || "Mi cuenta"}</span>
             </button>
             <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
           </div>

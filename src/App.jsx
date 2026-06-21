@@ -12,8 +12,9 @@ import Catalog from "./pages/Catalog";
 import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
+import Account from "./pages/Account";
 
-function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
+function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, suggestions, setSuggestions }) {
   const [subEmail, setSubEmail] = useState("");
   const [subStatus, setSubStatus] = useState(null);
 
@@ -36,10 +37,10 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
     <>
       {/* Navbar solo si NO estamos en /cart */}
       {location.pathname !== "/cart" && (
-        <Navbar onSearch={setSearchTerm} suggestions={suggestions} />
+        <Navbar onSearch={setSearchTerm} onTitle={setSearchTitle} suggestions={suggestions} activeFilter={searchTerm} />
       )}
       {/* Carrusel solo si NO estamos en /cart o /checkout */}
-      {location.pathname !== "/cart" && location.pathname !== "/checkout" && (
+      {!["/cart", "/checkout", "/mis-pedidos", "/mi-cuenta"].includes(location.pathname) && !searchTerm && (
         <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" >
           <div className="carousel-inner" >
             <div className="carousel-item active">
@@ -69,11 +70,12 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
         <Routes>
           <Route
             path="/"
-            element={<Catalog searchTerm={searchTerm} setSuggestions={setSuggestions} />}
+            element={<Catalog searchTerm={searchTerm} searchTitle={searchTitle} setSuggestions={setSuggestions} onClearSearch={() => { setSearchTerm(""); setSearchTitle(""); }} />}
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/mis-pedidos" element={<Orders />} />
+          <Route path="/mi-cuenta" element={<Account />} />
         </Routes>
       </main>
 
@@ -178,6 +180,7 @@ function Layout({ searchTerm, setSearchTerm, suggestions, setSuggestions }) {
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   return (
@@ -187,6 +190,8 @@ function App() {
         <Layout
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          searchTitle={searchTitle}
+          setSearchTitle={setSearchTitle}
           suggestions={suggestions}
           setSuggestions={setSuggestions}
         />

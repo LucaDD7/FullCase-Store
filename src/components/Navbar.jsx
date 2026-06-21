@@ -5,7 +5,7 @@ import { CartContext } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import './Navbar.css';
 
-function Navbar({ onSearch, suggestions }) {
+function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
   const [showModal, setShowModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +30,8 @@ function Navbar({ onSearch, suggestions }) {
 
   const handleLogoClick = (e) => {
     e.preventDefault();
+    onSearch("");
+    onTitle("");
     navigate("/");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -70,7 +72,7 @@ function Navbar({ onSearch, suggestions }) {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
                   {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
-                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                    <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
               </li>
@@ -80,7 +82,7 @@ function Navbar({ onSearch, suggestions }) {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
                   {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
-                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                    <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
               </li>
@@ -90,7 +92,7 @@ function Navbar({ onSearch, suggestions }) {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
                   {["Formula 1","Transparente"].map((m) => (
-                    <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                    <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
               </li>
@@ -111,7 +113,7 @@ function Navbar({ onSearch, suggestions }) {
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
               <ul className="dropdown-menu">
                 {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
-                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                  <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>
             </li>
@@ -119,7 +121,7 @@ function Navbar({ onSearch, suggestions }) {
               <a className="nav-link dropdown-toggle" href="#" id="cueroDropdownLg" role="button" data-bs-toggle="dropdown">CUERO</a>
               <ul className="dropdown-menu">
                 {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
-                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                  <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>
             </li>
@@ -127,7 +129,7 @@ function Navbar({ onSearch, suggestions }) {
               <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdownLg" role="button" data-bs-toggle="dropdown">PERSONALIZADO</a>
               <ul className="dropdown-menu">
                 {["Formula 1","Transparente"].map((m) => (
-                  <li key={m}><a className="dropdown-item" href="#" onClick={(e) => { e.preventDefault(); onSearch(m); }}>{m}</a></li>
+                  <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>
             </li>
@@ -139,7 +141,7 @@ function Navbar({ onSearch, suggestions }) {
           {/* Mi Cuenta — solo desktop */}
           <button className="btn btn-dark me-2 d-none d-lg-flex align-items-center" onClick={() => setShowAccountModal(true)}>
             <i className="bi bi-person-circle me-2"></i>
-            <span>Mi cuenta</span>
+            <span>{user?.user_metadata?.full_name || profile?.full_name || "Mi cuenta"}</span>
           </button>
 
           {/* Buscar */}
@@ -183,10 +185,11 @@ function Navbar({ onSearch, suggestions }) {
                     key={idx}
                     className="list-group-item list-group-item-action"
                     onClick={() => {
-                      const modelMatch = s.match(/\((.*?)\)/);
-                      const searchValue = modelMatch ? modelMatch[1] : s;
+                      const nameMatch = s.match(/^(.*?)\s*\(/);
+                      const searchValue = nameMatch ? nameMatch[1].trim() : s;
                       setSearchTerm(searchValue);
                       onSearch(searchValue);
+                      onTitle(searchValue);
                       setShowModal(false);
                     }}
                   >
@@ -200,6 +203,7 @@ function Navbar({ onSearch, suggestions }) {
                   className="btn btn-primary w-100 mb-2"
                   onClick={() => {
                     onSearch(searchTerm);
+                    onTitle(`Resultados de la búsqueda "${searchTerm}"`);
                     setShowModal(false);
                   }}
                 >
@@ -221,6 +225,13 @@ function Navbar({ onSearch, suggestions }) {
             <div className="text-center">
               {profile?.full_name && <p className="mb-0 fw-bold">{profile.full_name}</p>}
               <p className="mb-2 text-muted" style={{ fontSize: '0.9rem' }}>{user.email}</p>
+              <Link
+                to="/mi-cuenta"
+                className="btn btn-outline-secondary w-100 mb-2"
+                onClick={() => setShowAccountModal(false)}
+              >
+                <i className="bi bi-person me-2"></i>Editar perfil
+              </Link>
               <Link
                 to="/mis-pedidos"
                 className="btn btn-outline-primary w-100 mb-2"

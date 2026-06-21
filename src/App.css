@@ -1,5 +1,5 @@
 .footer-top {
-  min-height: 250px; /* más alto */
+  min-height: 250px;
 }
 
 .footer-top h5 {
@@ -8,4 +8,72 @@
 
 .footer-top .form-control {
   max-width: 300px;
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 575px) {
+
+  /* Contenedor principal: menos margen vertical */
+  main.container {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Imágenes de cards: altura reducida en mobile */
+  .card-img-top {
+    height: 160px !important;
+  }
+
+  /* Texto de cards más compacto */
+  .card-body .card-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .card-body .card-text {
+    font-size: 0.78rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .card-body .btn {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  /* Botones +/− del carrito más pequeños */
+  .card-body .btn-outline-secondary {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* Footer */
+  .footer-top {
+    min-height: auto;
+  }
+
+  /* Destacados del mes: título */
+  h4.text-white {
+    font-size: 1.1rem;
+  }
+
+  /* Menos padding en cards */
+  .card-body {
+    padding: 0.6rem;
+  }
+
+  /* Checkout form */
+  .checkout-form .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Carrito: cards en columna única */
+  .cart-item-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }

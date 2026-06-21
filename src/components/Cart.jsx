@@ -25,7 +25,7 @@ function Cart() {
 
       <div className="row">
         {cart.map((item) => (
-          <div key={item.id} className="col-md-4 mb-4">
+          <div key={item.id} className="col-12 col-md-4 mb-4">
             <div className="card h-100 shadow-sm">
               {item.image_url && (
                 <img src={item.image_url} className="card-img-top" alt={item.name} style={{ objectFit: 'cover', height: '320px' }} />

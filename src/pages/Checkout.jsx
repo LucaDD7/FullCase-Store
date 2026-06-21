@@ -164,7 +164,7 @@ function Checkout() {
                   />
                 </div>
                 <div className="col-12">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary w-100 w-md-auto">
                     Continuar con el pago
                   </button>
                 </div>

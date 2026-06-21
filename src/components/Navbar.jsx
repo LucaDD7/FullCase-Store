@@ -164,7 +164,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
       </nav>
 
       {/* Modal de búsqueda */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal show={showModal} onHide={() => { setShowModal(false); setSearchTerm(""); }} centered>
         <Modal.Header closeButton>
           <Modal.Title>Buscar productos</Modal.Title>
         </Modal.Header>
@@ -187,9 +187,9 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                     onClick={() => {
                       const nameMatch = s.match(/^(.*?)\s*\(/);
                       const searchValue = nameMatch ? nameMatch[1].trim() : s;
-                      setSearchTerm(searchValue);
                       onSearch(searchValue);
                       onTitle(searchValue);
+                      setSearchTerm("");
                       setShowModal(false);
                     }}
                   >
@@ -204,6 +204,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   onClick={() => {
                     onSearch(searchTerm);
                     onTitle(`Resultados de la búsqueda "${searchTerm}"`);
+                    setSearchTerm("");
                     setShowModal(false);
                   }}
                 >

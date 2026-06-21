@@ -91,12 +91,12 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
     {searchTerm && (
       <>
         {searchTitle && <h2 className="mb-2">{searchTitle}</h2>}
-        <div className="d-flex align-items-center gap-2 mb-3">
-          <span className="text-muted">Filtrando por:</span>
-          <span className="badge bg-light text-dark border d-flex align-items-center gap-1" style={{ fontSize: '0.9rem', padding: '6px 10px' }}>
-            {searchTerm}
+        <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
+          <span className="text-muted text-nowrap">Filtrando por:</span>
+          <span className="badge bg-light text-dark border d-flex align-items-center gap-1" style={{ fontSize: '0.9rem', padding: '6px 10px', maxWidth: '70vw', overflow: 'hidden' }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{searchTerm}</span>
             <button
-              className="btn-close ms-1"
+              className="btn-close ms-1 flex-shrink-0"
               style={{ fontSize: '0.6rem' }}
               onClick={onClearSearch}
               aria-label="Quitar filtro"

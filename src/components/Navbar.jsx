@@ -52,7 +52,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
         </button>
 
         {/* Sidebar offcanvas — mobile */}
-        <div className="offcanvas offcanvas-start text-bg-dark" tabIndex="-1" id="sidebarMenu">
+        <div className="offcanvas offcanvas-start text-bg-dark" tabIndex="-1" id="sidebarMenu" style={{ maxWidth: '260px' }}>
           <div className="offcanvas-header border-bottom border-secondary">
             <button
               className="btn text-white d-flex align-items-center gap-2 p-0"

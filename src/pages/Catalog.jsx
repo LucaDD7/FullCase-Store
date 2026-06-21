@@ -129,7 +129,7 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
               )}
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{product.name}</h5>
-                <p className="fw-bold mb-2">Modelo: {product.model}</p>
+                <p className="fw-bold mb-2">{product.model}</p>
                 <p className="fw-bold">${product.price}</p>
                 <p className="fw-bold">Stock: {product.stock}</p>
                 {quantityInCart > 0 && (

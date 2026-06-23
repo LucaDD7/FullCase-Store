@@ -21,6 +21,19 @@
   max-width: 300px;
 }
 
+/* ── Carrusel ── */
+#headerCarousel .carousel-item img {
+  height: 420px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 767px) {
+  #headerCarousel .carousel-item img {
+    height: 220px;
+  }
+}
+
 /* ── Mobile responsive ── */
 @media (max-width: 575px) {
 

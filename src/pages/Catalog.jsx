@@ -95,8 +95,21 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
     <>
       {!searchTerm && destacados.length > 0 && (
         <div className="mb-5">
-          <div className="py-3 px-4 mb-4" style={{ background: '#222', borderRadius: '8px', textAlign: 'center' }}>
-            <h4 className="text-white mb-0 fw-bold">Destacados del mes</h4>
+          <div className="mb-4" style={{ textAlign: 'center' }}>
+            <div className="neon-cyan" style={{
+              background: '#050d0d',
+              border: '1px solid #00ffff',
+              borderRadius: '6px',
+              padding: '18px 28px',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00ffff, transparent)' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00ffff, transparent)' }} />
+              <h4 className="mb-0 fw-bold" style={{ color: '#00ffff', letterSpacing: '4px', fontFamily: 'monospace', textShadow: '0 0 10px #00ffff, 0 0 25px #00ffff', textTransform: 'uppercase' }}>
+                ⚡ Destacados del mes ⚡
+              </h4>
+            </div>
           </div>
           <div className="row">
             {destacados.map((product) => {
@@ -124,8 +137,21 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
               );
             })}
           </div>
-          <div className="py-3 px-4 mb-4" style={{ background: '#222', borderRadius: '8px', textAlign: 'center' }}>
-            <h4 className="text-white mb-0 fw-bold">Todos los productos</h4>
+          <div className="mb-4 mt-2" style={{ textAlign: 'center' }}>
+            <div className="neon-green" style={{
+              background: '#030d07',
+              border: '1px solid #00ff88',
+              borderRadius: '6px',
+              padding: '18px 28px',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00ff88, transparent)' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'linear-gradient(90deg, transparent, #00ff88, transparent)' }} />
+              <h4 className="mb-0 fw-bold" style={{ color: '#00ff88', letterSpacing: '4px', fontFamily: 'monospace', textShadow: '0 0 10px #00ff88, 0 0 25px #00ff88', textTransform: 'uppercase' }}>
+                ◈ Todos los productos ◈
+              </h4>
+            </div>
           </div>
         </div>
       )}

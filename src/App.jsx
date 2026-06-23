@@ -66,6 +66,23 @@ function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, sugges
         </div>
       )}
 
+      {/* Botón flotante WhatsApp */}
+      <a
+        href="https://wa.me/59891902046"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          position: 'fixed', bottom: '24px', right: '24px', zIndex: 1050,
+          background: '#25D366', color: '#fff', borderRadius: '50%',
+          width: '56px', height: '56px', display: 'flex', alignItems: 'center',
+          justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+          fontSize: '1.8rem', textDecoration: 'none',
+        }}
+        title="Contactanos por WhatsApp"
+      >
+        <i className="bi bi-whatsapp" />
+      </a>
+
       <main className="container my-5">
         <Routes>
           <Route

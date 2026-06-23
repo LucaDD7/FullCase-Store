@@ -99,6 +99,13 @@ function Checkout() {
     if (itemsError) {
       setError("Hubo un problema al guardar los productos. Intenta de nuevo.");
     } else {
+      supabase.functions.invoke("send-order-email", {
+        body: {
+          order,
+          items: cart.map(item => ({ name: item.name, model: item.model, quantity: item.quantity, price: item.price })),
+          customer: formData,
+        },
+      });
       setSuccess(true);
       finalizePurchase();
     }

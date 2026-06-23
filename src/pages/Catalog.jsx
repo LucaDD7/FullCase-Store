@@ -50,7 +50,7 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
   const noResults = filteredProducts.length === 0;
   const sinStock = !noResults && filteredProducts.every(p => p.stock <= 0);
 
-  const destacados = products.filter(p => p.stock > 0).slice(0, 4);
+  const destacados = products.filter(p => p.featured && p.stock > 0);
 
   return (
     <>
@@ -75,7 +75,7 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
                     <p className="fw-bold mb-1" style={{ fontSize: '0.9rem' }}>{product.model}</p>
                     <p className="fw-bold mb-2">${product.price}</p>
                     <button className="btn btn-primary btn-sm mt-auto" onClick={() => addToCart(product)} disabled={agotado}>
-                      {agotado ? "Sin stock" : "Agregar al carrito"}
+                      {agotado ? "Agotado" : "Agregar al carrito"}
                     </button>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
                   onClick={() => addToCart(product)}
                   disabled={noStock}
                 >
-                  {noStock ? "Sin stock" : "Agregar al carrito"}
+                  {noStock ? "Agotado" : "Agregar al carrito"}
                 </button>
               </div>
             </div>

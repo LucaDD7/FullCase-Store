@@ -71,7 +71,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   MODELO
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
-                  {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
+                  {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 16 pro","Iphone 17","Iphone 17 pro"].map((m) => (
                     <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
@@ -112,7 +112,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
               <ul className="dropdown-menu">
-                {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 17"].map((m) => (
+                {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 16 pro","Iphone 17","Iphone 17 pro"].map((m) => (
                   <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>

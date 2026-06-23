@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
 import { supabase } from '../supabaseClient';
 import { useCart } from '../context/CartContext';
 
 function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
   const [products, setProducts] = useState([]);
+  const [zoomImage, setZoomImage] = useState(null);
   const { cart, cartVersion, addToCart } = useCart();
 
   const fetchProducts = async () => {
@@ -68,7 +70,7 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
               <div className="col-6 col-md-3 mb-3" key={product.id}>
                 <div className="card h-100 shadow-sm">
                   {product.image_url && (
-                    <img src={product.image_url} className="card-img-top" alt={product.name} style={{ objectFit: 'cover', height: '320px' }} />
+                    <img src={product.image_url} className="card-img-top" alt={product.name} style={{ objectFit: 'cover', height: '320px', cursor: 'zoom-in' }} onClick={() => setZoomImage(product)} />
                   )}
                   <div className="card-body d-flex flex-column p-2">
                     <p className="card-title fw-bold mb-1" style={{ fontSize: '0.9rem' }}>{product.name}</p>
@@ -124,7 +126,8 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
                   src={product.image_url}
                   className="card-img-top"
                   alt={product.name}
-                  style={{ objectFit: 'cover', height: '320px' }}
+                  style={{ objectFit: 'cover', height: '320px', cursor: 'zoom-in' }}
+                  onClick={() => setZoomImage(product)}
                 />
               )}
               <div className="card-body d-flex flex-column">
@@ -148,6 +151,16 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
         );
       })}
     </div>
+      <Modal show={!!zoomImage} onHide={() => setZoomImage(null)} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title style={{ fontSize: '1rem' }}>{zoomImage?.name} — {zoomImage?.model}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-0">
+          {zoomImage?.image_url && (
+            <img src={zoomImage.image_url} alt={zoomImage.name} style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }} />
+          )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

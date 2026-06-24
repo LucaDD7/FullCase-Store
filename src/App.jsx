@@ -44,13 +44,22 @@ function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, sugges
         <div id="headerCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-wrap="true" data-bs-pause="false">
           <div className="carousel-inner">
             <div className="carousel-item active" data-bs-interval="3000">
-              <img src="/images/Fondo1.png" className="d-block w-100" alt="Banner 1" />
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/images/mobile1.png" />
+                <img src="/images/Fondo1.png" className="d-block w-100" alt="Banner 1" />
+              </picture>
             </div>
             <div className="carousel-item" data-bs-interval="3000">
-              <img src="/images/Fondo2.png" className="d-block w-100" alt="Banner 2" />
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/images/mobile2.png" />
+                <img src="/images/Fondo2.png" className="d-block w-100" alt="Banner 2" />
+              </picture>
             </div>
             <div className="carousel-item" data-bs-interval="3000">
-              <img src="/images/Fondo3.png" className="d-block w-100" alt="Banner 3" />
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/images/mobile3.png" />
+                <img src="/images/Fondo3.png" className="d-block w-100" alt="Banner 3" />
+              </picture>
             </div>
           </div>
 

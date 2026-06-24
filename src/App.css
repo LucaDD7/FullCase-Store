@@ -9,6 +9,14 @@
 .neon-cyan  { animation: neon-pulse-cyan  2.5s ease-in-out infinite; }
 .neon-green { animation: neon-pulse-green 2.5s ease-in-out infinite; }
 
+/* ── Carrusel mobile ── */
+@media (max-width: 767px) {
+  #headerCarousel .carousel-item img {
+    height: auto;
+    object-fit: unset;
+  }
+}
+
 .footer-top {
   min-height: 250px;
 }
@@ -19,19 +27,6 @@
 
 .footer-top .form-control {
   max-width: 300px;
-}
-
-/* ── Carrusel ── */
-#headerCarousel .carousel-item img {
-  height: 420px;
-  object-fit: cover;
-  object-position: center;
-}
-
-@media (max-width: 767px) {
-  #headerCarousel .carousel-item img {
-    height: 220px;
-  }
 }
 
 /* ── Mobile responsive ── */

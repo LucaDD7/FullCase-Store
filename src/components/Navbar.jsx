@@ -42,7 +42,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
 
         {/* Tres puntos — solo mobile */}
         <button
-          className="btn btn-dark d-lg-none me-2"
+          className="nav-btn nav-btn-menu d-lg-none me-2"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#sidebarMenu"
@@ -71,7 +71,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   MODELO
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
-                  {["iPhone 11 pro","iPhone 13","iPhone 13 pro","iPhone 14","iPhone 14 pro","iPhone 15","iPhone 15 pro","iPhone 16","iPhone 16 pro","iPhone 17","iPhone 17 pro"].map((m) => (
+                  {["iPhone 11 Pro","iPhone 13","iPhone 13 Pro","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 16","iPhone 16 Pro","iPhone 17","iPhone 17 Pro"].map((m) => (
                     <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
@@ -112,7 +112,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
               <ul className="dropdown-menu">
-                {["Iphone 11 pro","Iphone 13","Iphone 13 pro","Iphone 14","Iphone 14 pro","Iphone 15","Iphone 15 pro","Iphone 16","Iphone 16 pro","Iphone 17","Iphone 17 pro"].map((m) => (
+                {["iPhone 11 Pro","iPhone 13","iPhone 13 Pro","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 16","iPhone 16 Pro","iPhone 17","iPhone 17 Pro"].map((m) => (
                   <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>
@@ -139,27 +139,27 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
         {/* Botones */}
         <div className="navbar-buttons d-flex align-items-center ms-auto ms-lg-0">
           {/* Mi Cuenta — solo desktop */}
-          <button className="btn btn-dark me-2 d-none d-lg-flex align-items-center" onClick={() => setShowAccountModal(true)}>
-            <i className="bi bi-person-circle me-2"></i>
+          <button className="nav-btn me-2 d-none d-lg-flex" onClick={() => setShowAccountModal(true)}>
+            <i className="bi bi-person-circle"></i>
             <span>{user?.user_metadata?.full_name || profile?.full_name || "Mi cuenta"}</span>
           </button>
 
           {/* Buscar */}
-          <button className="btn btn-dark me-2 d-flex align-items-center" onClick={() => setShowModal(true)}>
+          <button className="nav-btn me-2" onClick={() => setShowModal(true)}>
             <i className="bi bi-search"></i>
-            <span className="d-none d-lg-inline ms-2">Buscar</span>
+            <span className="d-none d-lg-inline">Buscar</span>
           </button>
 
-            {/* Botón carrito */}
-            <Link to="/cart" className="btn btn-dark position-relative">
-              <i className="bi bi-cart"></i>
-              {cartCount > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {cartCount}
-                </span>
-              )}
-              <span className="fw-bold">${cartTotal.toLocaleString()}</span>
-            </Link>
+          {/* Botón carrito */}
+          <Link to="/cart" className="nav-btn nav-btn-cart position-relative">
+            <i className="bi bi-cart"></i>
+            {cartCount > 0 && (
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {cartCount}
+              </span>
+            )}
+            <span className="fw-bold">${cartTotal.toLocaleString()}</span>
+          </Link>
           </div>
       </nav>
 

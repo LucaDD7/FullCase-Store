@@ -12,7 +12,7 @@
 /* ── Carrusel mobile ── */
 @media (max-width: 767px) {
   #headerCarousel .carousel-item img {
-    height: 100vh;
+    height: 103vh;
     object-fit: cover;
     object-position: center top;
   }

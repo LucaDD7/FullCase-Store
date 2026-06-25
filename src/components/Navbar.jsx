@@ -166,58 +166,78 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
           </div>
       </nav>
 
-      {/* Modal de búsqueda */}
-      <Modal show={showModal} onHide={() => { setShowModal(false); setSearchTerm(""); }} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Buscar productos</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input
-            type="text"
-            className="form-control mb-3"
-            placeholder="Escribe para buscar..."
-            value={searchTerm}
-            onChange={handleSearch}
+      {/* Barra de búsqueda overlay */}
+      {showModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1055 }}>
+          {/* Fondo oscuro */}
+          <div
+            onClick={() => { setShowModal(false); setSearchTerm(""); }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)' }}
           />
+          {/* Barra */}
+          <div style={{ position: 'relative', background: '#fff', boxShadow: '0 4px 20px rgba(0,0,0,0.12)' }}>
+            <div className="container-fluid px-4 py-3 d-flex align-items-center gap-3">
+              <i className="bi bi-search text-muted" style={{ fontSize: '1.1rem' }} />
+              <input
+                type="text"
+                className="form-control border-0 shadow-none p-0"
+                placeholder="Buscar productos..."
+                value={searchTerm}
+                onChange={handleSearch}
+                autoFocus
+                style={{ fontSize: '1rem' }}
+              />
+              <button
+                className="btn p-0 text-muted"
+                onClick={() => { setShowModal(false); setSearchTerm(""); }}
+              >
+                <i className="bi bi-x-lg" />
+              </button>
+            </div>
 
-          {searchTerm && suggestions.length > 0 && (
-            <>
-              <ul className="list-group mb-3">
-                {suggestions.map((s, idx) => (
-                  <li
-                    key={idx}
-                    className="list-group-item list-group-item-action"
-                    onClick={() => {
-                      const nameMatch = s.match(/^(.*?)\s*\(/);
-                      const searchValue = nameMatch ? nameMatch[1].trim() : s;
-                      onSearch(searchValue);
-                      onTitle(searchValue);
-                      setSearchTerm("");
-                      setShowModal(false);
-                    }}
-                  >
-                    {s}
-                  </li>
-                ))}
-              </ul>
-
-              {suggestions.length > 1 && (
-                <button
-                  className="btn btn-primary w-100 mb-2"
-                  onClick={() => {
-                    onSearch(searchTerm);
-                    onTitle(`Resultados de la búsqueda "${searchTerm}"`);
-                    setSearchTerm("");
-                    setShowModal(false);
-                  }}
-                >
-                  Ver todos los productos similares
-                </button>
-              )}
-            </>
-          )}
-        </Modal.Body>
-      </Modal>
+            {searchTerm && suggestions.length > 0 && (
+              <div className="border-top">
+                <ul className="list-group list-group-flush">
+                  {suggestions.map((s, idx) => (
+                    <li
+                      key={idx}
+                      className="list-group-item list-group-item-action px-4 py-2"
+                      style={{ cursor: 'pointer', fontSize: '0.95rem' }}
+                      onClick={() => {
+                        const nameMatch = s.match(/^(.*?)\s*\(/);
+                        const productName = nameMatch ? nameMatch[1].trim() : s;
+                        onSearch(s);
+                        onTitle(productName);
+                        setSearchTerm("");
+                        setShowModal(false);
+                      }}
+                    >
+                      <i className="bi bi-search me-2 text-muted" style={{ fontSize: '0.8rem' }} />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                {suggestions.length > 1 && (
+                  <div className="px-4 py-2 border-top">
+                    <button
+                      className="btn btn-link p-0 text-primary"
+                      style={{ fontSize: '0.9rem' }}
+                      onClick={() => {
+                        onSearch(searchTerm);
+                        onTitle(`Resultados de la búsqueda "${searchTerm}"`);
+                        setSearchTerm("");
+                        setShowModal(false);
+                      }}
+                    >
+                      Ver todos los productos similares →
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Modal Mi Cuenta */}
       <Modal show={showAccountModal} onHide={() => { setShowAccountModal(false); setAuthError(""); }} centered>

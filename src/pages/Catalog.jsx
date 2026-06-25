@@ -73,15 +73,27 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
   }
 
   const termLower = searchTerm.toLowerCase();
-  const isExactModel = products.some(p => p.model.toLowerCase() === termLower);
+  const compoundMatch = searchTerm.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
 
-  let filteredProducts = products.filter((p) => {
-    const nameMatch = p.name.toLowerCase().includes(termLower);
-    const modelMatch = isExactModel
-      ? p.model.toLowerCase() === termLower
-      : p.model.toLowerCase().includes(termLower);
-    return (nameMatch || modelMatch) && Number(p.price) <= priceLimit;
-  });
+  let filteredProducts;
+  if (compoundMatch) {
+    const namePart = compoundMatch[1].trim().toLowerCase();
+    const modelPart = compoundMatch[2].trim().toLowerCase();
+    filteredProducts = products.filter(p =>
+      p.name.toLowerCase().includes(namePart) &&
+      p.model.toLowerCase() === modelPart &&
+      Number(p.price) <= priceLimit
+    );
+  } else {
+    const isExactModel = products.some(p => p.model.toLowerCase() === termLower);
+    filteredProducts = products.filter((p) => {
+      const nameMatch = p.name.toLowerCase().includes(termLower);
+      const modelMatch = isExactModel
+        ? p.model.toLowerCase() === termLower
+        : p.model.toLowerCase().includes(termLower);
+      return (nameMatch || modelMatch) && Number(p.price) <= priceLimit;
+    });
+  }
 
   if (sortBy === 'price-asc') filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
   else if (sortBy === 'price-desc') filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
@@ -156,6 +168,24 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
         </div>
       )}
 
+      {searchTerm && (
+        <>
+          {searchTitle && <h2 className="mb-2">{searchTitle}</h2>}
+          <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
+            <span className="text-muted text-nowrap">Filtrando por:</span>
+            <span className="badge bg-light text-dark border d-flex align-items-center gap-1" style={{ fontSize: '0.9rem', padding: '6px 10px', maxWidth: '70vw', overflow: 'hidden' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{searchTerm}</span>
+              <button
+                className="btn-close ms-1 flex-shrink-0"
+                style={{ fontSize: '0.6rem' }}
+                onClick={onClearSearch}
+                aria-label="Quitar filtro"
+              />
+            </span>
+          </div>
+        </>
+      )}
+
       {/* Controles: ordenar + precio */}
       <div className="d-flex flex-wrap align-items-end gap-3 mb-4">
         <div>
@@ -183,24 +213,6 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
           </div>
         )}
       </div>
-
-      {searchTerm && (
-        <>
-          {searchTitle && <h2 className="mb-2">{searchTitle}</h2>}
-          <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
-            <span className="text-muted text-nowrap">Filtrando por:</span>
-            <span className="badge bg-light text-dark border d-flex align-items-center gap-1" style={{ fontSize: '0.9rem', padding: '6px 10px', maxWidth: '70vw', overflow: 'hidden' }}>
-              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{searchTerm}</span>
-              <button
-                className="btn-close ms-1 flex-shrink-0"
-                style={{ fontSize: '0.6rem' }}
-                onClick={onClearSearch}
-                aria-label="Quitar filtro"
-              />
-            </span>
-          </div>
-        </>
-      )}
 
       {(noResults || sinStock) && (
         <div className="alert alert-warning mt-2">

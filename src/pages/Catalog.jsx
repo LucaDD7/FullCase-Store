@@ -229,10 +229,11 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="fw-bold mb-2">{product.model}</p>
-                  <p className="fw-bold">${product.price}</p>
-                  <p className="fw-bold">Stock: {product.stock}</p>
+                  <p className="fw-bold mb-2">${product.price}</p>
                   {quantityInCart > 0 && (
-                    <p className="card-text text-primary">En carrito: {quantityInCart}</p>
+                    <span className="badge bg-primary mb-2" style={{ fontSize: '0.75rem', alignSelf: 'flex-start' }}>
+                      {quantityInCart} en carrito
+                    </span>
                   )}
                   <button
                     className="btn btn-primary mt-auto"

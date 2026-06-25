@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
       .from('profiles')
       .select('*')
       .eq('id', userId)
-      .single();
+      .maybeSingle();
     setProfile(data ?? null);
   };
 
@@ -51,8 +51,15 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut();
   };
 
+  const resetPassword = async (email) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://full-case-store.vercel.app/',
+    });
+    return { error };
+  };
+
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, signOut, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

@@ -16,7 +16,10 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
   const [authLoading, setAuthLoading] = useState(false);
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
-  const { user, profile, signIn, signUp, signOut } = useAuth();
+  const { user, profile, signIn, signUp, signOut, resetPassword } = useAuth();
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetStatus, setResetStatus] = useState(null);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -273,6 +276,27 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                       {authLoading ? "Ingresando..." : "Ingresar"}
                     </button>
                   </form>
+                  <div className="text-center mt-3">
+                    {!showReset ? (
+                      <button className="btn btn-link btn-sm p-0 text-muted" onClick={() => { setShowReset(true); setResetStatus(null); }}>
+                        ¿Olvidaste tu contraseña?
+                      </button>
+                    ) : (
+                      <div className="mt-2">
+                        <p className="text-muted mb-2" style={{ fontSize: '0.85rem' }}>Te enviamos un link para resetearla</p>
+                        <div className="input-group input-group-sm">
+                          <input type="email" className="form-control" placeholder="tu@email.com" value={resetEmail} onChange={e => setResetEmail(e.target.value)} />
+                          <button className="btn btn-outline-secondary" onClick={async () => {
+                            const { error } = await resetPassword(resetEmail);
+                            setResetStatus(error ? 'error' : 'ok');
+                          }}>Enviar</button>
+                        </div>
+                        {resetStatus === 'ok' && <p className="text-success mt-1 mb-0" style={{ fontSize: '0.8rem' }}>¡Revisá tu email!</p>}
+                        {resetStatus === 'error' && <p className="text-danger mt-1 mb-0" style={{ fontSize: '0.8rem' }}>Hubo un error, intentá de nuevo.</p>}
+                        <button className="btn btn-link btn-sm p-0 text-muted mt-1" onClick={() => setShowReset(false)}>Volver</button>
+                      </div>
+                    )}
+                  </div>
                 </Tab>
                 <Tab eventKey="register" title="Registrarse">
                   <form onSubmit={async (e) => {

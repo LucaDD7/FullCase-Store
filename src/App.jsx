@@ -102,6 +102,13 @@ function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, sugges
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/mis-pedidos" element={<Orders />} />
           <Route path="/mi-cuenta" element={<Account />} />
+          <Route path="*" element={
+            <div className="text-center py-5">
+              <h1 style={{ fontSize: '5rem', fontWeight: 800 }}>404</h1>
+              <h4 className="text-muted mb-4">Página no encontrada</h4>
+              <a href="/" className="btn btn-dark px-4 rounded-pill">Volver al inicio</a>
+            </div>
+          } />
         </Routes>
       </main>
 

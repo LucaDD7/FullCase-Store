@@ -52,15 +52,13 @@ function Catalog({ searchTerm, searchTitle, setSuggestions, onClearSearch }) {
 
   useEffect(() => {
     if (searchTerm) {
-      const matches = products
-        .filter(p =>
-          p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          p.model.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .map(p => `${p.name} (${p.model})`);
-      setSuggestions(matches.slice(0, 5));
+      const matches = products.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.model.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSuggestions({ items: matches.slice(0, 5), total: matches.length });
     } else {
-      setSuggestions([]);
+      setSuggestions({ items: [], total: 0 });
     }
   }, [searchTerm, products, setSuggestions]);
 

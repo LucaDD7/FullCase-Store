@@ -195,44 +195,48 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
               </button>
             </div>
 
-            {searchTerm && suggestions.length > 0 && (
+            {searchTerm && suggestions.items?.length > 0 && (
               <div className="border-top">
                 <ul className="list-group list-group-flush">
-                  {suggestions.map((s, idx) => (
+                  {suggestions.items.map((p) => (
                     <li
-                      key={idx}
+                      key={p.id}
                       className="list-group-item list-group-item-action px-4 py-2"
-                      style={{ cursor: 'pointer', fontSize: '0.95rem' }}
+                      style={{ cursor: 'pointer' }}
                       onClick={() => {
-                        const nameMatch = s.match(/^(.*?)\s*\(/);
-                        const productName = nameMatch ? nameMatch[1].trim() : s;
+                        const s = `${p.name} (${p.model})`;
                         onSearch(s);
-                        onTitle(productName);
+                        onTitle(p.name);
                         setSearchTerm("");
                         setShowModal(false);
                       }}
                     >
-                      <i className="bi bi-search me-2 text-muted" style={{ fontSize: '0.8rem' }} />
-                      {s}
+                      <div className="d-flex align-items-center gap-3">
+                        {p.image_url && (
+                          <img src={p.image_url} alt={p.name} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '6px', flexShrink: 0 }} />
+                        )}
+                        <div>
+                          <div className="fw-semibold" style={{ fontSize: '0.9rem' }}>{p.name} <span className="text-muted fw-normal">- {p.model}</span></div>
+                          <div className="text-primary fw-bold" style={{ fontSize: '0.85rem' }}>${Number(p.price).toLocaleString()}</div>
+                        </div>
+                      </div>
                     </li>
                   ))}
                 </ul>
-                {suggestions.length > 1 && (
-                  <div className="px-4 py-2 border-top">
-                    <button
-                      className="btn btn-link p-0 text-primary"
-                      style={{ fontSize: '0.9rem' }}
-                      onClick={() => {
-                        onSearch(searchTerm);
-                        onTitle(`Resultados de la búsqueda "${searchTerm}"`);
-                        setSearchTerm("");
-                        setShowModal(false);
-                      }}
-                    >
-                      Ver todos los productos similares →
-                    </button>
-                  </div>
-                )}
+                <div
+                  className="px-4 fw-bold py-2 border-top text-center"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    onSearch(searchTerm);
+                    onTitle(`Resultados de la búsqueda "${searchTerm}"`);
+                    setSearchTerm("");
+                    setShowModal(false);
+                  }}
+                >
+                  <span style={{ fontSize: '0.88rem', color: '#080808' }}>
+                    {suggestions.total} producto{suggestions.total !== 1 ? 's' : ''} encontrado{suggestions.total !== 1 ? 's' : ''}
+                  </span>
+                </div>
               </div>
             )}
           </div>

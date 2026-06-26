@@ -214,7 +214,7 @@ function Layout({ searchTerm, setSearchTerm, searchTitle, setSearchTitle, sugges
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState({ items: [], total: 0 });
 
   return (
     <AuthProvider>

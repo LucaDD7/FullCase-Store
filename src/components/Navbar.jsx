@@ -17,6 +17,28 @@ const MODELOS = [
   "iPhone 17e", "iPhone 17", "iPhone 17 Air", "iPhone 17 Pro", "iPhone 17 Pro Max",
 ];
 
+// Opciones de los menús CUERO, TRANSPARENTE y PERSONALIZADO.
+// "label" es lo que se ve en el menú; "term" es el texto que se busca dentro del nombre del producto en Supabase.
+const CUERO = [
+  { label: "Tarjetero", term: "Cuero tarjetero" },
+  { label: "Premium", term: "Cuero premium" },
+  { label: "Magnética", term: "Cuero magnética" },
+  { label: "Elegante", term: "Cuero elegante" },
+];
+
+const TRANSPARENTE = [
+  { label: "Negro mate", term: "Transparente negro mate" },
+  { label: "Verde mate", term: "Transparente verde mate" },
+  { label: "Tarjetero", term: "Transparente tarjetero" },
+  { label: "Magnética", term: "Transparente magnética" },
+];
+
+const PERSONALIZADO = [
+  { label: "Formula 1", term: "Formula 1" },
+  { label: "Negro", term: "Estampado negro" },
+  { label: "Blanco", term: "Estampado blanco" },
+];
+
 function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
   const [showModal, setShowModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -96,8 +118,18 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   CUERO
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
-                  {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
-                    <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                  {CUERO.map(({ label, term }) => (
+                    <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }} data-bs-dismiss="offcanvas">{label}</a></li>
+                  ))}
+                </ul>
+              </li>
+              <li className="nav-item dropdown border-bottom border-secondary">
+                <a className="nav-link dropdown-toggle text-white fw-bold px-4 py-3" href="#" data-bs-toggle="dropdown">
+                  TRANSPARENTE
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
+                  {TRANSPARENTE.map(({ label, term }) => (
+                    <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }} data-bs-dismiss="offcanvas">{label}</a></li>
                   ))}
                 </ul>
               </li>
@@ -106,8 +138,8 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   PERSONALIZADO
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
-                  {["Formula 1","Transparente"].map((m) => (
-                    <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
+                  {PERSONALIZADO.map(({ label, term }) => (
+                    <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }} data-bs-dismiss="offcanvas">{label}</a></li>
                   ))}
                 </ul>
               </li>
@@ -135,16 +167,24 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="cueroDropdownLg" role="button" data-bs-toggle="dropdown">CUERO</a>
               <ul className="dropdown-menu">
-                {["Tarjetero","Premium","Magnética","Elegante"].map((m) => (
-                  <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
+                {CUERO.map(({ label, term }) => (
+                  <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }}>{label}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="transparenteDropdownLg" role="button" data-bs-toggle="dropdown">TRANSPARENTE</a>
+              <ul className="dropdown-menu">
+                {TRANSPARENTE.map(({ label, term }) => (
+                  <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }}>{label}</a></li>
                 ))}
               </ul>
             </li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="personalizadoDropdownLg" role="button" data-bs-toggle="dropdown">PERSONALIZADO</a>
               <ul className="dropdown-menu">
-                {["Formula 1","Transparente"].map((m) => (
-                  <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
+                {PERSONALIZADO.map(({ label, term }) => (
+                  <li key={label}><a className={`dropdown-item ${activeFilter.toLowerCase() === term.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(term); onTitle(term); }}>{label}</a></li>
                 ))}
               </ul>
             </li>

@@ -5,6 +5,18 @@ import { CartContext } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import './Navbar.css';
 
+// Lista de modelos del menú MODELO (se usa en mobile y desktop).
+// El texto tiene que coincidir con el campo "model" de los productos en Supabase.
+const MODELOS = [
+  "iPhone 11 Pro",
+  "iPhone 12", "iPhone 12 mini", "iPhone 12 Pro", "iPhone 12 Pro Max",
+  "iPhone 13", "iPhone 13 mini", "iPhone 13 Pro", "iPhone 13 Pro Max",
+  "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", "iPhone 14 Pro Max",
+  "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max",
+  "iPhone 16e", "iPhone 16", "iPhone 16 Plus", "iPhone 16 Pro", "iPhone 16 Pro Max",
+  "iPhone 17e", "iPhone 17", "iPhone 17 Air", "iPhone 17 Pro", "iPhone 17 Pro Max",
+];
+
 function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
   const [showModal, setShowModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
@@ -74,7 +86,7 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
                   MODELO
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark border-0 rounded-0">
-                  {["iPhone 11 Pro","iPhone 13","iPhone 13 Pro","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 16","iPhone 16 Pro","iPhone 17","iPhone 17 Pro"].map((m) => (
+                  {MODELOS.map((m) => (
                     <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }} data-bs-dismiss="offcanvas">{m}</a></li>
                   ))}
                 </ul>
@@ -114,8 +126,8 @@ function Navbar({ onSearch, onTitle, suggestions, activeFilter = "" }) {
           <ul className="navbar-nav flex-row">
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="modeloDropdownLg" role="button" data-bs-toggle="dropdown">MODELO</a>
-              <ul className="dropdown-menu">
-                {["iPhone 11 Pro","iPhone 13","iPhone 13 Pro","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro","iPhone 16","iPhone 16 Pro","iPhone 17","iPhone 17 Pro"].map((m) => (
+              <ul className="dropdown-menu" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+                {MODELOS.map((m) => (
                   <li key={m}><a className={`dropdown-item ${activeFilter.toLowerCase() === m.toLowerCase() ? 'fw-bold text-decoration-underline' : ''}`} href="#" onClick={(e) => { e.preventDefault(); onSearch(m); onTitle(m); }}>{m}</a></li>
                 ))}
               </ul>
